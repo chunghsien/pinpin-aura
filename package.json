@@ -21,6 +21,7 @@
         "@tailwindcss/vite": "^4.0.0",
         "@types/jquery": "^3.5.16",
         "@types/node": "^22.14.1",
+        "@vitejs/plugin-react": "^4.4.1",
         "concurrently": "^9.0.1",
         "gulp": "^5.0.0",
         "gulp-clean-css": "^4.3.0",
