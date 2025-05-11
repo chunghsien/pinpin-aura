@@ -1,0 +1,33 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\View\Component;
+
+class {{ class }} extends Component
+{
+    /**
+     * @var string|null
+     */
+    public $class;
+
+    /**
+     * 建構子 - 可以接收傳入的參數。
+     *
+     * @param string|null $class
+     */
+    public function __construct(?string $class = null)
+    {
+        $this->class = $class;
+    }
+
+    /**
+     * 渲染 Blade 元件的 View。
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
+    {
+        return view('{{ view }}');
+    }
+}
