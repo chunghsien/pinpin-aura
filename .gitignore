@@ -30,3 +30,9 @@ yarn-error.log
 
 #packages
 /packages
+
+#comppser.lock|package-lock.json
+/*.lock
+/*-lock.json
+
+.Zone.Identifier

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d00d66175e3ed94308ec7f7d908647df",
+    "content-hash": "9b8d404491155e7d26e6ba98bde5fe43",
     "packages": [
         {
             "name": "brick/math",
@@ -2585,11 +2585,11 @@
         },
         {
             "name": "pinpin/themes-lezada",
-            "version": "dev-main",
+            "version": "dev-themes-lezada-develop",
             "dist": {
                 "type": "path",
                 "url": "./packages/pinpin/themes-lezada",
-                "reference": "e12c027e8e068a42d421546530c32c2845894ef2"
+                "reference": "40ecf6e680f3caeadbc9ffc342f4cc210c6abd5c"
             },
             "type": "library",
             "extra": {
@@ -5754,6 +5754,50 @@
                 }
             ],
             "time": "2024-11-21T01:49:47+00:00"
+        },
+        {
+            "name": "wantp/snowflake",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wantp/snowflake.git",
+                "reference": "821c2800521cddc31afd8dd980090883abc7fe2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wantp/snowflake/zipball/821c2800521cddc31afd8dd980090883abc7fe2d",
+                "reference": "821c2800521cddc31afd8dd980090883abc7fe2d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "wantp\\Snowflake\\": "src/Snowflake/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "zhangrongwang",
+                    "email": "zhangrongwang798@gmail.com"
+                }
+            ],
+            "description": "A package for create unique id by snowflake",
+            "keywords": [
+                "snowflake",
+                "uniqueId"
+            ],
+            "support": {
+                "issues": "https://github.com/wantp/snowflake/issues",
+                "source": "https://github.com/wantp/snowflake/tree/master"
+            },
+            "time": "2019-08-05T07:14:56+00:00"
         },
         {
             "name": "webmozart/assert",
