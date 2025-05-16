@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\InstalledTheme;
 
 class IndexController extends Controller
 {
     public function query()
     {
-        return view('index', []);
+
+        $installedTheme = InstalledTheme
+            ::where('use_type', '=', 'site')
+            ->where('is_active', '=', 1)->firstOrFail();
+        return view('index', [
+            'layout' => $installedTheme->slug . "::layouts.app"
+        ]);
     }
 }

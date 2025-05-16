@@ -31,3 +31,11 @@ yarn-error.log
 
 #packages
 /packages
+
+#comppser.lock|package-lock.json
+/*.lock
+/*-lock.json
+
+.Zone.Identifier
+/resources/ts/themes/*
+!/resources/ts/themes/.gitkeep
