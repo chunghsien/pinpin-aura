@@ -15,6 +15,13 @@
             "options": {
                 "symlink": true
             }
+        },
+        {
+            "type": "path",
+            "url": "./packages/pinpin/core-ui-admin",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "require": {
@@ -23,6 +30,7 @@
         "laravel/tinker": "^2.10.1",
         "nikic/php-parser": "*",
         "pinpin/themes-lezada": "@dev",
+        "pinpin/core-ui-admin": "@dev",
         "symfony/process": "^7.2",
         "wantp/snowflake": "^1.2"
     },

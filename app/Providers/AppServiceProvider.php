@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\SettingRepository;
 use App\Repositories\SettingRepositoryInterface;
 use App\Support\ArrayFileLoader;
+use Illuminate\Support\Facades\Blade;
+use App\Helpers\ViteHelper;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $className = ViteHelper::class;
+        Blade::directive('viteAsset', fn($expression) => "<?php echo {$className}::scriptTag($expression); ?>");
+
+        Blade::directive('viteAssetByRoute', fn($themeName) => "<?php echo {$className}::scriptTagByRoute($themeName); ?>");
     }
 }

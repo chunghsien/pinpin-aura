@@ -11,9 +11,16 @@ use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopCheckoutController;
 use App\Http\Controllers\ShopProductController;
 use App\Http\Controllers\ShopWishlistController;
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+
+Route::prefix('{lang}/admin')->group(function () {
+    Route::get('/{any?}', [AdminIndexController::class, 'query'])
+        ->where('any', '.*')
+        ->name('admin');
+});
 
 Route::middleware(['web'])->group(function () {
     Route::get('/', function () {

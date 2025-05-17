@@ -9,22 +9,31 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "baseUrl": "./resources/ts",
+    "baseUrl": ".",
     "paths": {
-      "@": [
-        "*"
+      "@/*": [
+        "resources/ts"
+      ],
+      "@core-ui-admin/*": [
+        "resources/ts/themes/core-ui-admin/*"
+      ],
+      "@themes-lezada/*": [
+        "resources/ts/themes/themes-lezada/*"
       ]
     },
     "typeRoots": [
       "./@types",
       "./node_modules/@types"
     ],
-    "types": [
-      "vite/client"
+    "jsx": "react-jsx",
+    "lib": [
+      "DOM",
+      "ES2020"
     ]
   },
   "include": [
-    "resources/ts/**/*.ts"
+    "resources/ts/**/*.ts",
+    "resources/ts/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

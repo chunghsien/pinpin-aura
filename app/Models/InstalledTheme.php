@@ -16,6 +16,7 @@ class InstalledTheme extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'use_type',
         'name',
         'slug',
         'source_type',
@@ -44,5 +45,21 @@ class InstalledTheme extends Model
     public function themeComponents()
     {
         return $this->hasMany(ThemeComponent::class);
+    }
+
+    /**
+     * @see parent::activate()
+     * @desc 因為還要靠use_type欄位決定所以override寫特例
+     */
+    public function activate(string $useType): void
+    {
+        self::where('id', '!=', $this->id)->where('use_type', '=', $useType)
+            ->update(['is_active' => false]);
+        $this->update(['is_active' => true]);
+        // 啟用這個主題（如果尚未啟用）
+        if (!$this->is_active) {
+            $this->is_active = true;
+            $this->save();
+        }
     }
 }

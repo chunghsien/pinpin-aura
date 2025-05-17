@@ -11,20 +11,48 @@ use RecursiveDirectoryIterator;
 
 class InstallThemeCommand extends Command
 {
+    //package組織名稱(預設為pinpin
     protected $signature = '
         theme:install
-        {--package= : package最頂端名稱}
-        {--name= : 主題名稱}
+        {--org= : package組織名稱(ex.pinpin}
+        {--name= : 主題名稱ex.themes-lezada, core-ui-admin}
         {--force : 強制更新已安裝主題}
     ';
 
     protected $description = '將「樣式」主題安裝到系統中。';
 
+    protected function createSymlink($source, $target)
+    {
+        if (is_link($target)) {
+            $this->warn("Symlink 已存在：$target");
+            return;
+        }
+
+        if (file_exists($target)) {
+            $this->warn("目標已存在且非 Symlink：$target");
+            return;
+        }
+
+        if (!file_exists($source)) {
+            $this->warn("來源資料夾不存在：$source");
+            return;
+        }
+
+        // 確保目標目錄存在
+        if (!is_dir(dirname($target))) {
+            mkdir(dirname($target), 0755, true);
+        }
+
+        symlink($source, $target);
+        $this->info("已建立 Symlink：$target -> $source");
+    }
+
+
     public function handle()
     {
-        $package = $this->option('package');
-        if (!$package) {
-            $this->error('你必須指定 --package');
+        $org = $this->option('org');
+        if (! $org) {
+            $this->error('你必須指定 --org');
             return 1;
         }
 
@@ -34,9 +62,9 @@ class InstallThemeCommand extends Command
             return 1;
         }
 
-        $themePackageFolder = base_path("packages/{$package}/themes-{$slug}");
+        $themePackageFolder = base_path("packages/{$org}/{$slug}");
         if (!is_dir($themePackageFolder)) {
-            $this->error("{$themePackageFolder} 不存在");
+            $this->error("該主題名稱 {$slug} 不存在");
             return 1;
         }
 
@@ -56,10 +84,8 @@ class InstallThemeCommand extends Command
                 return 0;
             }
         }
-
         $installOptionLoadPath = "{$themePackageFolder}/config/{$slug}.php";
         $installOption = app('array-loader')::load($installOptionLoadPath);
-
         $installedTheme = InstalledTheme::updateOrCreate(
             ['slug' => $slug],
             $installOption
@@ -67,8 +93,10 @@ class InstallThemeCommand extends Command
 
         // 🆕 掃描 Blade Component 路徑並自動註冊
         $this->registerBladeComponents($installedTheme, "{$themePackageFolder}/resources/views/components");
-
-        $installedTheme->activate();
+        $installedTheme->activate($installedTheme->use_type);
+        $tsSource = base_path("packages/{$org}/{$slug}/resources/ts");
+        $tsTarget = base_path("resources/ts/themes/{$slug}");
+        $this->createSymlink($tsSource, $tsTarget);
         $this->info("主題 [$slug] 已成功" . ($exists ? '更新' : '安裝') . "！");
     }
 
