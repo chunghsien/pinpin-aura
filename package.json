@@ -5,10 +5,6 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev:admin": "VITE_APP=core-ui-admin vite",
-        "dev:lezada": "VITE_APP=lezada vite",
-        "build:admin": "VITE_APP=core-ui-admin vite build",
-        "build:lezada": "VITE_APP=lezada vite build",
         "dev": "vite",
         "gulp": "gulp all-frontend"
     },

@@ -3,14 +3,17 @@ import laravel from "laravel-vite-plugin";
 import react from "@vitejs/plugin-react";
 import { globSync } from "glob";
 import path from "path";
+import "dotenv/config";
 
 export default () => {
+    const { TS_OUT_DIR } = process.env;
+
     const targetApp = process.env.VITE_APP || "**";
 
     const jsFiles = globSync(
         [
-            `resources/ts/themes/${targetApp}/([aA]pp|main).@(ts|tsx)`, // 共用 main.ts + 主程式
-            `resources/ts/themes/themes-lezada/pages/*.ts`, // 頁面腳本
+            `resources/ts/themes/${targetApp}/@(app|main).@(ts|tsx)`,
+            `resources/ts/themes/${targetApp}/pages/*.ts`, // 頁面腳本
         ],
         { absolute: true }
     );
@@ -51,7 +54,7 @@ export default () => {
             },
         },
         build: {
-            outDir: "public/build", // ✅ 統一輸出目錄
+            outDir: TS_OUT_DIR,
             manifest: true, // ✅ 開啟 manifest.json
             manifestFileName: "manifest.json", // ✅ 指定 manifest 檔案名稱
             rollupOptions: {
@@ -60,7 +63,7 @@ export default () => {
             emptyOutDir: true,
         },
         server: {
-            host: "localhost",
+            host: "0.0.0.0",
             port: 5173,
             hmr: {
                 host: "localhost",
