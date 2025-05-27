@@ -8,9 +8,6 @@ class CustomController extends Controller
 {
     public function query()
     {
-        //$slug = request('customSlug');
-        return view('custom-page', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('custom-page', $this->getLayout());
     }
 }

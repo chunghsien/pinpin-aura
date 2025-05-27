@@ -31,7 +31,7 @@ class FormatHtmlCommand extends Command
             return Command::FAILURE;
         }
 
-        $sourceFiles = File::glob($inputPath . '/*.php');
+        $sourceFiles = File::glob($inputPath . '/*.html');
         foreach ($sourceFiles as $sourcePath) {
             $destPath = str_replace('originals', 'formatted', $sourcePath);
             File::ensureDirectoryExists(dirname($destPath));

@@ -8,8 +8,6 @@ class ShopCategoryController extends Controller
 {
     public function query()
     {
-        return view('shop.category', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('shop.category', $this->getLayout());
     }
 }

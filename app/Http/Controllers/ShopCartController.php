@@ -8,8 +8,6 @@ class ShopCartController extends Controller
 {
     public function query()
     {
-        return view('shop.cart', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('shop.cart', $this->getLayout());
     }
 }

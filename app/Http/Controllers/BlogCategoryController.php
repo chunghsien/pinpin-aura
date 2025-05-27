@@ -8,8 +8,6 @@ class BlogCategoryController extends Controller
 {
     public function query()
     {
-        return view('blog.category', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('blog.categroy', $this->getLayout());
     }
 }

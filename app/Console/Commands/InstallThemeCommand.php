@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\HeaderFooterStyle;
 use Illuminate\Console\Command;
 use App\Models\InstalledTheme;
+use App\Models\SiteStyle;
 use App\Models\ThemeComponent;
 use Illuminate\Support\Str;
 use RecursiveIteratorIterator;
@@ -97,6 +99,39 @@ class InstallThemeCommand extends Command
         $tsSource = base_path("packages/{$org}/{$slug}/resources/ts");
         $tsTarget = base_path("resources/ts/themes/{$slug}");
         $this->createSymlink($tsSource, $tsTarget);
+        $headerFooterStyleSeederClass = Str::studly($org) . '\\' . Str::studly($slug) . '\\Database\\Seeders\\HeaderFooterStyleSeeder';
+
+        if (class_exists($headerFooterStyleSeederClass)) {
+            $headerFooterStyleSeederReflection = new \ReflectionClass($headerFooterStyleSeederClass);
+            $headerFooterStyleSeederReflection->newInstance()->run($installedTheme->id);
+        }
+        if (SiteStyle::where('use_type', '=', 'web')->count() == 0) {
+            SiteStyle::insert([
+                'use_type' => 'web'
+            ]);
+        }
+        $headerStyle = HeaderFooterStyle::where('theme_id', '=', $installedTheme->id)
+            ->where('type', '=', 'header')->where('is_active', '=', 1)->first();
+        if ($headerStyle) {
+            SiteStyle
+                ::where('use_type', '=', 'web')
+                ->update(['header_style_id' => $headerStyle->id]);
+        }
+        //
+        if (SiteStyle::where('use_type', '=', 'web-mobile')->count() == 0) {
+            SiteStyle::insert([
+                'use_type' => 'web-mobile'
+            ]);
+        }
+        $mobileHeaderStyle = HeaderFooterStyle
+            ::where('theme_id', '=', $installedTheme->id)
+            ->whereLike('slug', '%mobile%')
+            ->where('type', '=', 'header')->where('is_active', '=', 1)->first() ?? $headerStyle;
+        if ($mobileHeaderStyle) {
+            SiteStyle
+                ::where('use_type', '=', 'web-mobile')
+                ->update(['header_style_id' => $mobileHeaderStyle->id]);
+        }
         $this->info("主題 [$slug] 已成功" . ($exists ? '更新' : '安裝') . "！");
     }
 

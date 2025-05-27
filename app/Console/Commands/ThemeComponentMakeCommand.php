@@ -11,9 +11,9 @@ class ThemeComponentMakeCommand extends Command
 {
     protected $signature = '
         theme:blade-component
-        {name : 元件名稱（如 HeaderWrapper）}
+        {name : 元件名稱（如 headers/header-box-topbar）}
         {--org= : package 組織（預設 pinpin）}
-        {--theme= : 主題名稱（預設 lezada）}
+        {--theme= : 主題名稱（預設 themes-lezada）}
     ';
 
     protected $description = '在指定的主題套件中建立 Blade Component';
@@ -22,7 +22,7 @@ class ThemeComponentMakeCommand extends Command
     {
         $name = $this->argument('name');
         $org = $this->option('org') ?? 'pinpin';
-        $theme = $this->option('theme') ?? 'lezada';
+        $theme = $this->option('theme') ?? 'themes-lezada';
         $orgStudly = Str::studly($org);
         $themeStudly = Str::studly($theme);
 
@@ -34,11 +34,10 @@ class ThemeComponentMakeCommand extends Command
         $bladeDir = implode('/', array_map([Str::class, 'kebab'], $pathParts));
         $fileName = Str::kebab($className);
 
-        $basePath = base_path("packages/{$org}/themes-{$theme}");
+        $basePath = base_path("packages/{$org}/{$theme}");
         $classPath = $basePath . '/src/View/Components' . ($relativeDir ? "/{$relativeDir}" : '') . "/{$className}.php";
         $viewPath = $basePath . "/resources/views/components" . ($bladeDir ? "/{$bladeDir}" : '') . "/{$fileName}.blade.php";
-
-        $namespace = "{$orgStudly}\\Themes{$themeStudly}\\View\\Components" . ($namespacePath ? "\\{$namespacePath}" : '');
+        $namespace = "{$orgStudly}\\{$themeStudly}\\View\\Components" . ($namespacePath ? "\\{$namespacePath}" : '');
 
         // stub 路徑
         $stubClass = base_path('stubs/blade-class.stub');
@@ -54,7 +53,7 @@ class ThemeComponentMakeCommand extends Command
             $classTemplate = File::get($stubClass);
             $classContent = str_replace(
                 ['{{ namespace }}', '{{ class }}', '{{ view }}'],
-                [$namespace, $className, "themes-{$theme}::components" . ($bladeDir ? ".{$bladeDir}" : '') . ".{$fileName}"],
+                [$namespace, $className, "{$theme}::components" . ($bladeDir ? ".{$bladeDir}" : '') . ".{$fileName}"],
                 $classTemplate
             );
 

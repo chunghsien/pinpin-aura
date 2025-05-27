@@ -8,8 +8,6 @@ class MyAccountController extends Controller
 {
     public function query()
     {
-        return view('my-account', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('my-account', $this->getLayout());
     }
 }

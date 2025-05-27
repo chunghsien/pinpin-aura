@@ -8,8 +8,6 @@ class ShopWishlistController extends Controller
 {
     public function query()
     {
-        return view('shop.wishlist', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('shop.wishlist', $this->getLayout());
     }
 }

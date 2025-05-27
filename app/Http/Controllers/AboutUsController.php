@@ -8,8 +8,6 @@ class AboutUsController extends Controller
 {
     public function query()
     {
-        return view('about-us', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view('about-us', $this->getLayout());
     }
 }
