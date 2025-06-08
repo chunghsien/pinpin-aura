@@ -4,7 +4,7 @@ namespace App\ViewModels;
 
 use App\Models\SiteStyle;
 use App\Models\HeaderFooterStyle;
-use App\Repositories\ThemeRepositoryInterface;
+use App\Repositories\Contracts\ThemeRepositoryInterface;
 use Illuminate\Support\Str;
 
 class SiteHeaderViewModel

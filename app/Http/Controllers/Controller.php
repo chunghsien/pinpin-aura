@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ThemeRepositoryInterface;
+use App\Repositories\Contracts\ThemeRepositoryInterface;
 use App\Services\ThemeService;
 use App\ViewModels\SiteHeaderViewModel;
 use Illuminate\Support\Collection;

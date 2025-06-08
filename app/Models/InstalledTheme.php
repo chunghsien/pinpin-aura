@@ -17,6 +17,7 @@ class InstalledTheme extends Model
      */
     protected $fillable = [
         'use_type',
+        'namespace',
         'name',
         'slug',
         'source_type',

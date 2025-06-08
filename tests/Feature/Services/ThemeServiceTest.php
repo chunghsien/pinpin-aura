@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Feature\Services;
 
 use Tests\TestCase;
 use App\Services\ThemeService;

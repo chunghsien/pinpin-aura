@@ -41,3 +41,4 @@ yarn-error.log
 .Zone.Identifier
 /resources/ts/themes/*
 !/resources/ts/themes/.gitkeep
+composer.lock

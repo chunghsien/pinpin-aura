@@ -24,7 +24,6 @@ class DefaultDocument extends Seeder
                 return [
                     'index' => $route->getName(),
                     'name' => $route->getName(),
-                    'theme_id' => 0,
                     'sort' => 16777215,
                     'is_allowed_methods' => json_encode($methods),
                     'is_active' => 1,

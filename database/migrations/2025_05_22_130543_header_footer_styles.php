@@ -11,6 +11,7 @@ return new class extends Migration {
         Schema::create('header_footer_styles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('theme_id')->comment('關聯主題 installed_themes.id')->constrained('installed_themes')->onDelete('cascade');
+            $table->text('properties')->nullable();
             $table->enum('type', ['header', 'footer'])->comment('樣式類型：header 或 footer');
             $table->string('name')->comment('樣式名稱，例如：經典標頭');
             $table->string('slug')->unique()->comment('樣式代碼，用於 Blade Component 呼叫');

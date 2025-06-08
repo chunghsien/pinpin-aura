@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\InstalledTheme;
 
-class ThemeRepository implements ThemeRepositoryInterface
+class ThemeRepository implements Contracts\ThemeRepositoryInterface
 {
     public function getActiveSiteTheme($use_type = 'web')
     {

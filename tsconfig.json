@@ -32,6 +32,7 @@
     ]
   },
   "include": [
+    "@types/**/*",
     "resources/ts/**/*.ts",
     "resources/ts/**/*.tsx"
   ],

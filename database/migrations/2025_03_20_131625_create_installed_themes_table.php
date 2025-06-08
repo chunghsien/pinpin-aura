@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('use_type')->comment(
                 '使用類型，當安裝更多主題時，確保每一個相同use_type + name 只會有一個會被啟用(is_active = 1)'
             );
-            $table->string('name')->comment('樣板主題顯示名稱');
+            $table->string('namespace')->comment('PHP Namespace');
+            $table->string('name', 255)->comment('樣板主題顯示名稱');
             $table->string('slug')->unique()->comment('樣板識別代號（例如 lezada）');
             $table->enum('source_type', ['local', 'marketplace', 'git'])->default('local')->comment('主題來源');
             $table->string('version')->nullable()->comment('樣板版本');

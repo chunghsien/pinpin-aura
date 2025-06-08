@@ -9,10 +9,10 @@ use Illuminate\Support\Str;
 class ThemeComponentDeleteCommand extends Command
 {
     protected $signature = '
-        theme:blade-component:delete
-        {name : 元件名稱（如 Admin/HeaderMenu）}
-        {--org= : package組織名稱(預設為pinpin)}
-        {--theme= : 主題名稱（如 lezada）}
+        theme:livewire:delete
+        {name : 元件名稱（如 headers/base）}
+        {--org= : package組織名稱(預設為 pinpin )}
+        {--theme= : 主題名稱（如 themes-lezada ）}
         {--force : 跳過確認直接刪除}
     ';
 
@@ -22,7 +22,7 @@ class ThemeComponentDeleteCommand extends Command
     {
         $name = $this->argument('name');
         $org = $this->option('org') ?? 'pinpin';
-        $theme = $this->option('theme') ?? 'lezada';
+        $theme = $this->option('theme') ?? 'themes-lezada';
         $force = $this->option('force');
 
         $pathParts = explode('/', $name);
@@ -31,14 +31,12 @@ class ThemeComponentDeleteCommand extends Command
         $bladeDir = implode('/', array_map([Str::class, 'kebab'], $pathParts));
         $fileName = Str::kebab($className);
 
-        $basePath = base_path("packages/{$org}/themes-{$theme}");
-        $classPath = $basePath . '/src/View/Components' . ($relativeDir ? "/{$relativeDir}" : '') . "/{$className}.php";
-        $viewPath = $basePath . "/resources/views/components" . ($bladeDir ? "/{$bladeDir}" : '') . "/{$fileName}.blade.php";
-        $testPath = $basePath . "/tests/Feature/View/{$className}Test.php";
-        $providerPath = "$basePath/src/Themes{$theme}/Themes{$theme}ServiceProvider.php";  // Blade Component Provider
-        $composerPath = "$basePath/composer.json";
+        $basePath = base_path("packages/{$org}/{$theme}");
+        $classPath = $basePath . '/src/Http/Livewire' . ($relativeDir ? "/{$relativeDir}" : '') . "/{$className}.php";
+        $viewPath = $basePath . "/resources/views/livewire" . ($bladeDir ? "/{$bladeDir}" : '') . "/{$fileName}.blade.php";
+        $testPath = $basePath . "/tests/Feature/Http/{$className}Test.php";
 
-        if (!$force && !$this->confirm("你確定要刪除 Blade 元件 {$className} 嗎？")) {
+        if (!$force && !$this->confirm("你確定要刪除 Livewire 元件 {$className} 嗎？")) {
             $this->warn("已取消刪除。");
             return 0;
         }

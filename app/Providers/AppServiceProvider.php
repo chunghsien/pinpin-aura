@@ -4,13 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use App\Repositories\SettingRepository;
-use App\Repositories\SettingRepositoryInterface;
 use App\Support\ArrayFileLoader;
 use App\Helpers\ViteHelper;
-use App\Repositories\ThemeRepository;
 use App\Repositories\ThemeRepositoryInterface;
 use App\Services\ThemeService;
+use Illuminate\Support\Facades\File;
+use ReflectionClass;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,14 +18,48 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
+        $repositoriesPath = app_path('Repositories');
+        $respositoryNamespace = 'App\Repositories';
+        foreach (File::allFiles($repositoriesPath) as $file) {
+            $relativePath = str_replace(
+                [$repositoriesPath . '/', '.php'],
+                '',
+                $file->getRealPath()
+            );
+            $relativeClassPath = str_replace('/', '\\', $relativePath);
+            $interface = $respositoryNamespace . '\\' . $relativeClassPath;
+            if (preg_match('/Interface$/', $interface)) {
+                $repositoryFullClass = preg_replace('/Interface$/', '', $interface);
+                $repositoryFullClass = preg_replace('/\\\\Contracts/', '', $repositoryFullClass);
+                if (class_exists($repositoryFullClass) && interface_exists($interface)) {
+                    $this->app->bind($interface, $repositoryFullClass);
+                    $this->app->singleton($interface, $repositoryFullClass);
+                }
+                continue;
+            }
+        }
+
         $this->app->singleton('array-loader', function () {
             return new ArrayFileLoader();
         });
-        $this->app->singleton(ThemeRepositoryInterface::class, ThemeRepository::class);
-        $this->app->singleton(ThemeService::class, function ($app) {
-            return new ThemeService($app->make(ThemeRepositoryInterface::class));
-        });
+
+        $servicesPath = app_path('Services');
+        $serviceNamespace = 'App\Services';
+        foreach (File::allFiles($servicesPath) as $file) {
+            $relativePath = str_replace([$servicesPath . '/', '.php'], '', $file->getRealPath());
+            $relativeClassPath = str_replace('/', '\\', $relativePath);
+            $fullClass = $serviceNamespace . '\\' . $relativeClassPath;
+            if (class_exists($fullClass)) {
+                $reflection = new ReflectionClass($fullClass);
+                $parameters = [];
+                foreach ($reflection->getConstructor()->getParameters() as $parameterInstance) {
+                    $parameters[] = $this->app->make($parameterInstance->getType()->getName());
+                }
+                $this->app->singleton($fullClass, function (/*$app*/) use ($reflection, $parameters) {
+                    return $reflection->newInstance(...$parameters);
+                });
+            }
+        }
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\ThemeRepositoryInterface;
+use App\Repositories\Contracts\ThemeRepositoryInterface;
 
 class ThemeService
 {
