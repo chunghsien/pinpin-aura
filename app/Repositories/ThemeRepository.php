@@ -4,11 +4,11 @@ namespace App\Repositories;
 
 use App\Models\InstalledTheme;
 
-class ThemeRepository implements ThemeRepositoryInterface
+class ThemeRepository implements Contracts\ThemeRepositoryInterface
 {
-    public function getActiveSiteTheme()
+    public function getActiveSiteTheme($use_type = 'web')
     {
-        return InstalledTheme::where('use_type', 'site')
+        return InstalledTheme::where('use_type', $use_type)
             ->where('is_active', 1)
             ->first();
     }

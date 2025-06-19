@@ -2,24 +2,40 @@
 
 namespace App\Services;
 
-use App\Repositories\ThemeRepositoryInterface;
+use App\Repositories\Contracts\ThemeRepositoryInterface;
 
 class ThemeService
 {
     protected $theme;
 
-    public function __construct(ThemeRepositoryInterface $repository)
+    public function __construct(protected ThemeRepositoryInterface $repository)
     {
-        $this->theme = $repository->getActiveSiteTheme();
+        //
     }
 
-    public function getLayout(): string
+
+    public function getPageNotFoundSlot($useType = 'web'): string
     {
-        return $this->theme ? $this->theme->slug . "::layouts.app" : 'default::layouts.app';
+        $this->setTheme($useType);
+        return $this->theme->slug . "::errors.404";
     }
 
-    public function getTheme()
+    public function getLayout($useType = 'web'): string
     {
+        $this->setTheme($useType);
+        return $this->theme ? $this->theme->slug . "::layouts.app" : 'layouts.app';
+    }
+
+    public function getTheme($useType = 'web')
+    {
+        $this->setTheme($useType);
         return $this->theme;
+    }
+
+    protected function setTheme($useType)
+    {
+        if (!is_string($this->theme)) {
+            $this->theme = $this->repository->getActiveSiteTheme($useType);
+        }
     }
 }

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\LayoutService;
 
 class CustomController extends Controller
 {
     public function query()
     {
-        //$slug = request('customSlug');
-        return view('custom-page', [
-            'layout' => $this->getLayout(),
-        ]);
+        return view(
+            'custom-page',
+            $this->getLayout()->merge(app(LayoutService::class)->getViewModel('web'))
+        );
     }
 }

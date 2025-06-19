@@ -15,7 +15,7 @@ class DummySiteController extends Controller
     }
 }
 
-class SiteControllerTest extends TestCase
+class IndexControllerTest extends TestCase
 {
     public function testGetLayoutUsingAppHelper()
     {

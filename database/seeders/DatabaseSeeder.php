@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Pinpin\ThemesLezada\Database\Seeders\HeaderFooterStyleSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             LanguageLocaleSeeder::class,
-            DefaultDocument::class
+            DefaultDocument::class,
+            CurrenciesTableSeeder::class,
+            HeaderFooterStyleSeeder::class
         ]);
     }
 }

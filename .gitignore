@@ -31,8 +31,6 @@ yarn-error.log
 # Python venv
 /scripts/venv/
 
-#packages
-/packages
 
 #comppser.lock|package-lock.json
 /*.lock
@@ -41,3 +39,4 @@ yarn-error.log
 .Zone.Identifier
 /resources/ts/themes/*
 !/resources/ts/themes/.gitkeep
+composer.lock

@@ -15,11 +15,8 @@ class Document extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'theme_id',
-        'language_locale_id',
         'index',
         'name',
-        'route',
         'sort',
         'is_allowed_methods',
         'is_active',
@@ -31,8 +28,6 @@ class Document extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'theme_id' => 'integer',
-        'language_locale_id' => 'integer',
         'sort' => 'integer',
         'is_active' => 'boolean',
     ];

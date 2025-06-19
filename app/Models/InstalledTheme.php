@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InstalledTheme extends Model
 {
-    use HasFactory, Activate;
+    use Activate;
 
     protected $table = 'installed_themes';
 
@@ -17,6 +17,7 @@ class InstalledTheme extends Model
      */
     protected $fillable = [
         'use_type',
+        'namespace',
         'name',
         'slug',
         'source_type',

@@ -1,0 +1,7 @@
+[submodule "packages/pinpin/core-ui-admin"]
+	path = packages/pinpin/core-ui-admin
+	url = https://github.com/chunghsien/core-ui-admin.git
+
+[submodule "packages/pinpin/themes-lezada"]
+	path = packages/pinpin/themes-lezada
+	url = https://github.com/chunghsien/themes-lezada.git

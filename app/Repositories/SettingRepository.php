@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 
-class SettingRepository implements SettingRepositoryInterface
+class SettingRepository implements Contracts\SettingRepositoryInterface
 {
     protected string $cachePrefix = 'settings.';
 

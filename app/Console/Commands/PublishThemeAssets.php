@@ -12,7 +12,7 @@ class PublishThemeAssets extends Command
      *
      * @var string
      */
-    protected $signature = 'theme:publish-assets {--theme= : 要發佈資源的樣板名稱（例如：lezada）}';
+    protected $signature = 'theme:publish-assets {--theme= : 要發佈資源的樣板名稱（例如：themes-lezada）}';
 
     /**
      * The console command description.
@@ -26,9 +26,9 @@ class PublishThemeAssets extends Command
      */
     public function handle()
     {
-        $theme = $this->option('theme') ?? 'lezada';
+        $theme = $this->option('theme') ?? 'themes-lezada';
 
-        $source = base_path("packages/pinpin/themes-{$theme}/public/assets");
+        $source = base_path("packages/pinpin/{$theme}/public/assets");
         $destination = public_path("themes/{$theme}");
 
         if (!File::exists($source)) {

@@ -14,8 +14,6 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('theme_id', false, true)->default(0)->comment('主題ID');
-
             $table->string('index', 48)->comment('索引')->unique();
             $table->string('name', 128)->comment('名稱');
             $table->mediumInteger('sort', false, true)->default('16777215')->comment('排序');

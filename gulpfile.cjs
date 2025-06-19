@@ -20,7 +20,7 @@ const isFile = (filePath) => {
 
 // TODO: 如果 fetchDataFromDB 很複雜，需要重新寫成 CommonJS 模組；這裡先 mock 一個簡版
 const fetchDataFromDB = async (themeSlug) => {
-    let sassCollect = [`packages/pinpin/themes/${themeSlug}/resources/sass/app.scss`];
+    let sassCollect = [`packages/${themeSlug}/resources/sass/app.scss`];
     const bootstrapPath = path.resolve(
         __dirname,
         `packages/pinpin/themes/${themeSlug}/resources/sass/bootstrap5.scss`
@@ -33,7 +33,7 @@ const fetchDataFromDB = async (themeSlug) => {
         {
             config_json: {
                 gulp: {
-                    sass: sassCollect, 
+                    sass: sassCollect,
                     //["resources/sass/app.scss", "resources/sass/bootstrap5.scss"],
                 },
             },
@@ -43,7 +43,7 @@ const fetchDataFromDB = async (themeSlug) => {
 
 // 基本設定
 const themeSlug = "pinpin/themes-lezada";
-const saveFolder = themeSlug.split('/')[1].replace(/^themes\-/, '');
+const saveFolder = themeSlug.split('/')[1]/*.replace(/^themes\-/, '')*/;
 
 const saveCssFolder = path.resolve(
     __dirname,
@@ -57,16 +57,17 @@ const saveJsFolder = path.resolve(
 // --- SASS 編譯任務 ---
 gulp.task("sass", async (cb) => {
     const rows = await fetchDataFromDB(themeSlug);
-    const sassPath = rows[0].config_json.gulp.sass;
+    const sassPath = rows[0].config_json.gulp.sass[0];
 
     if (!fs.existsSync(saveCssFolder)) {
         fs.mkdirSync(saveCssFolder, { recursive: true });
     }
-
+    console.log(sassPath);
     if (
         typeof sassPath === "string" &&
         isFile(path.resolve(__dirname, sassPath))
     ) {
+
         gulp.src(path.resolve(__dirname, sassPath))
             .pipe(gulpSass().on("error", gulpSass.logError))
             .pipe(cleanCSS())
