@@ -13,6 +13,13 @@ class ThemeService
         //
     }
 
+
+    public function getPageNotFoundSlot($useType = 'web'): string
+    {
+        $this->setTheme($useType);
+        return $this->theme->slug . "::errors.404";
+    }
+
     public function getLayout($useType = 'web'): string
     {
         $this->setTheme($useType);

@@ -22,13 +22,8 @@ abstract class Controller
     protected function getLayout(): Collection
     {
         $useType = 'web';
-        $siteHeaderViewModel = new SiteHeaderViewModel(
-            $useType,
-            app(ThemeRepositoryInterface::class)
-        );
         return collect([
             'layout' => app(ThemeService::class)->getLayout($useType),
-            'headerComponent' => $siteHeaderViewModel->getHeaderComponentName(),
         ]);
     }
 }

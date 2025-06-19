@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->text('properties')->nullable();
             $table->enum('type', ['header', 'footer'])->comment('樣式類型：header 或 footer');
             $table->string('name')->comment('樣式名稱，例如：經典標頭');
-            $table->string('slug')->unique()->comment('樣式代碼，用於 Blade Component 呼叫');
+            $table->string('slug')->unique()->comment('樣式代碼，用於 Blade Component 呼叫，無作用時僅作為識別用');
             $table->boolean('is_active')->default(true)->comment('樣式是否啟用');
             $table->string('preview_image')->nullable()->comment('預覽圖 URL');
             $table->timestamp('created_at')->useCurrent();
