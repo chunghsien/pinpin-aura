@@ -16,14 +16,21 @@ class LayoutService
     public function getViewModel(string $useType = 'web'): array
     {
         $siteStyleModel = $this->siteStyleRepository->getByUseType($useType);
-        $headerFootStyleModel = $siteStyleModel->headerStyle()->firstOrFail();
-        $installedThemeModel = $headerFootStyleModel->theme()->firstOrFail();
+        $headerStyleModel = $siteStyleModel->headerStyle()->firstOrFail();
+        $footerStyleModel = $siteStyleModel->footerStyle()->firstOrFail();
+        $installedThemeModel = $headerStyleModel->theme()->firstOrFail();
         return [
             'headerViewModel' => [
-                'component' => $installedThemeModel->slug . '::livewire.headers.widgets.' . $headerFootStyleModel->slug,
                 'properties' => [
                     'installedTheme' => $installedThemeModel,
-                    'header' => $headerFootStyleModel,
+                    'header' => $headerStyleModel,
+                ]
+            ],
+            'footerViewModel' => [
+                'component' => $footerStyleModel->slug,
+                'properties' => [
+                    'installedTheme' => $installedThemeModel,
+                    'footer' => $footerStyleModel,
                 ]
             ]
         ];
