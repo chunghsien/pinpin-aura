@@ -39,3 +39,6 @@ yarn.lock
 .Zone.Identifier
 /resources/ts/themes/*
 !/resources/ts/themes/.gitkeep
+
+# Issue tracking directory
+/_issue

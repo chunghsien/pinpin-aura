@@ -94,7 +94,7 @@ class InstallThemeCommand extends Command
         );
 
         // 🆕 掃描 Blade Component 路徑並自動註冊
-        $this->registerBladeComponents($installedTheme, "{$themePackageFolder}/resources/views/components");
+        $this->registerLivewireComponents($installedTheme, "{$themePackageFolder}/resources/views/livewire");
         $installedTheme->activate($installedTheme->use_type);
         $tsSource = base_path("packages/{$org}/{$slug}/resources/ts");
         $tsTarget = base_path("resources/ts/themes/{$slug}");
@@ -136,19 +136,19 @@ class InstallThemeCommand extends Command
     }
 
     /**
-     * 掃描 Blade Component 並寫入 ThemeComponent 資料表
+     * 掃描 Livewire Component 並寫入 ThemeComponent 資料表
      */
-    protected function registerBladeComponents($installedTheme, $componentPath)
+    protected function registerLivewireComponents($installedTheme, $componentPath)
     {
         if (!is_dir($componentPath)) {
-            $this->warn("未找到 Blade Component 目錄：{$componentPath}");
+            $this->warn("未找到 Livewire Component 目錄：{$componentPath}");
             return;
         }
 
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($componentPath));
         foreach ($iterator as $file) {
-            if ($file->isFile() && $file->getExtension() === 'blade.php') {
-                $fullPath = $file->getPathname();
+            $fullPath = $file->getPathname();
+            if ($file->isFile() && preg_match('/\.blade\.php$/', $fullPath)) {
                 $relativePath = str_replace($componentPath . DIRECTORY_SEPARATOR, '', $fullPath);
                 $componentName = Str::of($relativePath)
                     ->replace(DIRECTORY_SEPARATOR, '.')
@@ -157,12 +157,12 @@ class InstallThemeCommand extends Command
 
                 $where = [
                     'installed_theme_id' => $installedTheme->id,
-                    'component_type' => 'blade',
+                    'component_type' => 'livewire',
                     'resolve_name' => $componentName,
                 ];
                 $data = [
                     'installed_theme_id' => $installedTheme->id,
-                    'component_type' => 'blade',
+                    'component_type' => 'livewire',
                     'resolve_name' => $componentName,
                 ];
 
