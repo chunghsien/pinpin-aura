@@ -6,8 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Support\ArrayFileLoader;
 use App\Helpers\ViteHelper;
-use App\Repositories\ThemeRepositoryInterface;
-use App\Services\ThemeService;
 use Illuminate\Support\Facades\File;
 use ReflectionClass;
 

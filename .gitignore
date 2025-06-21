@@ -31,12 +31,14 @@ yarn-error.log
 # Python venv
 /scripts/venv/
 
-
-#comppser.lock|package-lock.json
-/*.lock
-/*-lock.json
+# Lock files
+composer.lock
+package-lock.json
+yarn.lock
 
 .Zone.Identifier
 /resources/ts/themes/*
 !/resources/ts/themes/.gitkeep
-composer.lock
+
+# Issue tracking directory
+/_issue

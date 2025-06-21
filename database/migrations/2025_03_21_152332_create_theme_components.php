@@ -23,7 +23,9 @@ return new class extends Migration
                 'layout_overlay',
                 'section',
                 'row',
-                'module'
+                'module',
+                'blade',
+                'livewire'
             ])
                 ->comment(
                     json_encode(
@@ -35,8 +37,10 @@ return new class extends Migration
                             'layout_overlay' => 'layout_overlay',
                             'section' => '部分',
                             'row' => '列',
-                            'module' => '模塊，最基礎的html元件'
-                        ]
+                            'module' => '模塊，最基礎的html元件',
+                            'blade' => 'Blade 元件'
+                        ],
+                        JSON_UNESCAPED_UNICODE
                     )
                 );
             $table->string('resolve_name', 255)->comment('livewire位置名稱');
