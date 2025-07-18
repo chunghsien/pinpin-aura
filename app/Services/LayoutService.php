@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\MenuType;
+use App\Models\Menu;
 use App\Repositories\Contracts\SiteStyleRepositoryInterface;
 
 class LayoutService
@@ -19,11 +21,13 @@ class LayoutService
         $headerStyleModel = $siteStyleModel->headerStyle()->firstOrFail();
         $footerStyleModel = $siteStyleModel->footerStyle()->firstOrFail();
         $installedThemeModel = $headerStyleModel->theme()->firstOrFail();
-        return [
+        $headerMenus = Menu::getHierarchicalMenu(MenuType::HEADER);
+        $viewModel = [
             'headerViewModel' => [
                 'properties' => [
                     'installedTheme' => $installedThemeModel,
                     'header' => $headerStyleModel,
+                    'menus' => $headerMenus,
                 ]
             ],
             'footerViewModel' => [
@@ -33,6 +37,8 @@ class LayoutService
                     'footer' => $footerStyleModel,
                 ]
             ]
+
         ];
+        return $viewModel;
     }
 }

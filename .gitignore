@@ -1,44 +1,59 @@
+# Laravel
+/vendor
 /.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/dist
-/public/storage
-/public/themes
+/.phpunit.result.cache
+.env*
+!.env.example
 /storage/*.key
 /storage/pail
 /storage/lezada
-/vendor
-/docker
-.env
-.env.testing
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
+/storage/telescope
+/storage/horizon
+/public/storage
+/public/build
+/public/dist
+/public/hot
+/public/themes
+
+# Node / Frontend
+/node_modules
 /package-lock.json
-/.fleet
-/.idea
+/yarn.lock
+/npm-debug.log
+/yarn-error.log
+
+# Editor Config
+/.idea/
+/.vscode/
+/.fleet/
+/.zed/
+/.devcontainer/
 /.nova
-/.vscode
-/.devcontainer
-/.zed
+
+# Docker
+/docker
+
 # Python venv
 /scripts/venv/
 
-# Lock files
+# Composer
 composer.lock
-package-lock.json
-yarn.lock
+auth.json
+.phpactor.json
+.phpstorm.meta.php
 
+# OS-generated
 .Zone.Identifier
+Thumbs.db
+Desktop.ini
+
+# TypeScript/Blade Theme Folders
 /resources/ts/themes/*
 !/resources/ts/themes/.gitkeep
 
-# Issue tracking directory
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Issue tracking
 /_issue
