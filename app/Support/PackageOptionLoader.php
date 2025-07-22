@@ -15,7 +15,7 @@ class PackageOptionLoader
 
     public function __construct(string $org, string $package)
     {
-        $this->packagePath = base_path("packages/{$org}/{$package}/config/class_mapper");
+        $this->packagePath = base_path("packages/{$org}/{$package}/config/class-mapper");
         $this->package = $package;
         $this->org = $org;
         if (!is_dir($this->packagePath)) {

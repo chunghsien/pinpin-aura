@@ -14,15 +14,15 @@ use PhpParser\Node;
  */
 class PackageClassMapperManger
 {
-    protected $package_org;
-    protected $package_name;
+    protected $packageOrg;
+    protected $packageName;
     protected $basePath;
 
-    public function __construct($package_org, $package_name)
+    public function __construct($packageOrg, $packageName)
     {
-        $this->package_org = $package_org;
-        $this->package_name = $package_name;
-        $this->basePath = base_path("packages/{$package_org}/{$package_name}");
+        $this->packageOrg = $packageOrg;
+        $this->packageName = $packageName;
+        $this->basePath = base_path("packages/{$packageOrg}/{$packageName}");
         if (!is_dir($this->basePath)) {
             File::makeDirectory($this->basePath, 0755, true);
         }
@@ -82,7 +82,7 @@ class PackageClassMapperManger
                     $mapVal = array_filter($mapVal, function ($part) {
                         return false === array_search(
                             $part,
-                            [Str::studly($this->package_org), 'Http', 'Livewire']
+                            [Str::studly($this->packageOrg), 'Http', 'Livewire']
                         );
                     });
                     $mapVal = array_map(function ($part) {
