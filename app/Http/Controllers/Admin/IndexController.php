@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+declare(strict_types=1);
 
+namespace App\Http\Controllers\Admin;
 
 class IndexController
 {

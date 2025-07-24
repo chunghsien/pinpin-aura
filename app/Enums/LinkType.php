@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum LinkType: string
@@ -106,10 +108,10 @@ enum LinkType: string
     private function validateInternalUrl(string $url): bool
     {
         // 允許相對路徑、絕對路徑或路由名稱
-        return !empty($url) && (
+        return ! empty($url) && (
             str_starts_with($url, '/') ||
             str_starts_with($url, '#') ||
-            !str_contains($url, '://') // 不包含協議的視為內部連結
+            ! str_contains($url, '://') // 不包含協議的視為內部連結
         );
     }
 
@@ -118,7 +120,7 @@ enum LinkType: string
      */
     private function validateExternalUrl(string $url): bool
     {
-        return filter_var($url, FILTER_VALIDATE_URL) !== false;
+        return filter_var($url, FILTER_VALIDATE_URL) !== FALSE;
     }
 
     /**
@@ -138,7 +140,7 @@ enum LinkType: string
     private function formatInternalUrl(string $url): string
     {
         // 如果是路由名稱，嘗試生成 URL
-        if (!str_starts_with($url, '/') && !str_starts_with($url, '#')) {
+        if (! str_starts_with($url, '/') && ! str_starts_with($url, '#')) {
             try {
                 return route($url);
             } catch (\Exception $e) {
@@ -155,7 +157,7 @@ enum LinkType: string
     private function formatExternalUrl(string $url): string
     {
         // 如果沒有協議，添加 https://
-        if (!str_starts_with($url, 'http://') && !str_starts_with($url, 'https://')) {
+        if (! str_starts_with($url, 'http://') && ! str_starts_with($url, 'https://')) {
             return 'https://' . $url;
         }
 

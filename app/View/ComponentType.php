@@ -1,32 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View;
 
 abstract class ComponentType
 {
     //最外圍元件
-    const HEADER_WRAPPER = 'header_wrapper';
+    public const HEADER_WRAPPER = 'header_wrapper';
 
     //最外圍元件
-    const FOOTER_WRAPPER = 'footer_wrapper';
+    public const FOOTER_WRAPPER = 'footer_wrapper';
 
-    const LAYOUT_OVERLAY = 'layout_overlay';
+    public const LAYOUT_OVERLAY = 'layout_overlay';
 
     //部分
-    const SECTION = 'section';
+    public const SECTION = 'section';
 
     //列
-    const ROW = 'row';
+    public const ROW = 'row';
 
     //模塊，最基礎的html元件
-    const MODULE = 'module';
+    public const MODULE = 'module';
 
-    static public function isHeaderWrapper(string $component_type)
+    public static function isHeaderWrapper(string $component_type)
     {
         return $component_type === self::HEADER_WRAPPER;
     }
 
-    static public function isFooterWrapper(string $component_type)
+    public static function isFooterWrapper(string $component_type)
     {
         return $component_type === self::FOOTER_WRAPPER;
     }

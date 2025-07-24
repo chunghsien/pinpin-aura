@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Helpers\MenuStructureHelper;
@@ -16,7 +18,7 @@ class MenuStructureHelperTest extends TestCase
 
         // 檢查頂層選單數量
         $topLevelMenus = array_filter($convertedMenus, function ($menu) {
-            return $menu['parent_id'] === null;
+            return $menu['parent_id'] === NULL;
         });
 
         $this->assertGreaterThan(0, count($topLevelMenus));
@@ -37,7 +39,7 @@ class MenuStructureHelperTest extends TestCase
         $this->assertGreaterThan(0, count($desktopMenus));
 
         // 檢查第一個選單的結構
-        if (!empty($desktopMenus)) {
+        if (! empty($desktopMenus)) {
             $firstMenu = $desktopMenus[0];
             $this->assertArrayHasKey('name', $firstMenu);
             $this->assertArrayHasKey('children', $firstMenu);
@@ -64,7 +66,7 @@ class MenuStructureHelperTest extends TestCase
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
 
-        if (!empty($desktopMenus)) {
+        if (! empty($desktopMenus)) {
             $firstMenu = $desktopMenus[0];
 
             // 測試選單 CSS 類別
@@ -86,16 +88,17 @@ class MenuStructureHelperTest extends TestCase
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
 
         // 檢查是否有階層結構
-        $hasChildren = false;
+        $hasChildren = FALSE;
         foreach ($desktopMenus as $menu) {
-            if (!empty($menu['children'])) {
-                $hasChildren = true;
+            if (! empty($menu['children'])) {
+                $hasChildren = TRUE;
 
                 // 檢查子選單結構
                 foreach ($menu['children'] as $child) {
                     $this->assertArrayHasKey('name', $child);
                     $this->assertArrayHasKey('link_target', $child);
                 }
+
                 break;
             }
         }
@@ -129,13 +132,14 @@ class MenuStructureHelperTest extends TestCase
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
 
-        $megaMenuFound = false;
+        $megaMenuFound = FALSE;
         foreach ($desktopMenus as $menu) {
             if (MenuStructureHelper::isMegaMenu($menu)) {
-                $megaMenuFound = true;
+                $megaMenuFound = TRUE;
 
                 // Mega Menu 應該有多個子項目
                 $this->assertGreaterThan(2, count($menu['children'] ?? []));
+
                 break;
             }
         }

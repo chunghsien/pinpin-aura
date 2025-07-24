@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class () extends Migration {
     public function up(): void
     {
         Schema::table('menus', function (Blueprint $table) {
@@ -36,7 +38,7 @@ return new class extends Migration {
                 ->comment('Mega Menu 右側裝飾圖片 URL');
 
             $table->boolean('has_image')
-                ->default(false)
+                ->default(FALSE)
                 ->after('menu_image_url')
                 ->comment('是否包含圖片');
 
@@ -58,12 +60,12 @@ return new class extends Migration {
                 ->comment('顯示規則 (裝置類型、用戶權限等)');
 
             $table->boolean('is_mega_column')
-                ->default(false)
+                ->default(FALSE)
                 ->after('display_rules')
                 ->comment('是否為 Mega Menu 欄位項目');
 
             $table->boolean('is_column_title')
-                ->default(false)
+                ->default(FALSE)
                 ->after('is_mega_column')
                 ->comment('是否為欄位標題 (不可點擊)');
 
@@ -80,7 +82,7 @@ return new class extends Migration {
 
             // 進階功能欄位
             $table->boolean('is_featured')
-                ->default(false)
+                ->default(FALSE)
                 ->after('tooltip')
                 ->comment('是否為特色選單項目');
 
@@ -126,7 +128,7 @@ return new class extends Migration {
                 'tooltip',
                 'is_featured',
                 'badge_text',
-                'badge_color'
+                'badge_color',
             ]);
         });
     }

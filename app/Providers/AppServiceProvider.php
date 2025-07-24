@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
-use App\Support\ArrayFileLoader;
 use App\Helpers\ViteHelper;
+use App\Support\ArrayFileLoader;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
                     $this->app->bind($interface, $repositoryFullClass);
                     $this->app->singleton($interface, $repositoryFullClass);
                 }
+
                 continue;
             }
         }
@@ -66,8 +69,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $className = ViteHelper::class;
-        Blade::directive('viteAsset', fn($expression) => "<?php echo {$className}::scriptTag($expression); ?>");
+        Blade::directive('viteAsset', fn ($expression) => "<?php echo {$className}::scriptTag($expression); ?>");
 
-        Blade::directive('viteAssetByRoute', fn($themeName) => "<?php echo {$className}::scriptTagByRoute($themeName); ?>");
+        Blade::directive('viteAssetByRoute', fn ($themeName) => "<?php echo {$className}::scriptTagByRoute($themeName); ?>");
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Support;
 
 class ArrayFileLoader
@@ -11,13 +13,13 @@ class ArrayFileLoader
         if (preg_match('/^packages\//', $realPath)) {
             throw new \RuntimeException("僅適用於packages內");
         }
-        if (!isset(self::$cache[$realPath])) {
-            if (!file_exists($realPath)) {
+        if (! isset(self::$cache[$realPath])) {
+            if (! file_exists($realPath)) {
                 throw new \RuntimeException("Config file not found: {$realPath}");
             }
 
             $data = require $realPath;
-            if (!is_array($data)) {
+            if (! is_array($data)) {
                 throw new \UnexpectedValueException("file must return array: {$realPath}");
             }
 

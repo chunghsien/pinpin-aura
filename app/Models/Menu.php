@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use App\Enums\MenuType;
-use App\Enums\MenuStyle;
 use App\Enums\LinkType;
+use App\Enums\MenuStyle;
+use App\Enums\MenuType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Builder;
 
 class Menu extends Model
 {
@@ -76,7 +78,7 @@ class Menu extends Model
     public function children(): HasMany
     {
         return $this->hasMany(Menu::class, 'parent_id')
-            ->where('is_active', true)
+            ->where('is_active', TRUE)
             ->orderBy('order');
     }
 
@@ -102,7 +104,7 @@ class Menu extends Model
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', TRUE);
     }
 
     /**
@@ -142,7 +144,7 @@ class Menu extends Model
      */
     public function scopeFeatured(Builder $query): Builder
     {
-        return $query->where('is_featured', true);
+        return $query->where('is_featured', TRUE);
     }
 
     /**
@@ -204,12 +206,15 @@ class Menu extends Model
                 if ($this->mega_columns) {
                     $classes[] = "mega-menu-column-{$this->mega_columns}";
                 }
+
                 break;
             case MenuStyle::SINGLE_COLUMN:
                 $classes[] = 'single-column-menu';
+
                 break;
             case MenuStyle::MULTI_LEVEL:
                 $classes[] = 'single-column-menu single-column-has-children';
+
                 break;
         }
 
@@ -245,12 +250,15 @@ class Menu extends Model
         switch ($this->menu_style) {
             case MenuStyle::MEGA_MENU:
                 $classes[] = 'mega-sub-menu';
+
                 break;
             case MenuStyle::SINGLE_COLUMN:
                 $classes[] = 'single-column-menu';
+
                 break;
             case MenuStyle::MULTI_LEVEL:
                 $classes[] = 'multilevel-submenu';
+
                 break;
         }
 
@@ -285,16 +293,16 @@ class Menu extends Model
     public function shouldDisplayOn(string $device): bool
     {
         if (empty($this->display_rules)) {
-            return true;
+            return TRUE;
         }
 
         $rules = $this->display_rules;
 
         if (isset($rules['devices'])) {
-            return in_array($device, $rules['devices']);
+            return in_array($device, $rules['devices'], TRUE);
         }
 
-        return true;
+        return TRUE;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -50,7 +52,7 @@ return [
     |
     */
 
-    'lazy_placeholder' => null,
+    'lazy_placeholder' => NULL,
 
     /*
     |---------------------------------------------------------------------------
@@ -64,17 +66,17 @@ return [
     */
 
     'temporary_file_upload' => [
-        'disk' => null,        // Example: 'local', 's3'              | Default: 'default'
-        'rules' => null,       // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
-        'directory' => null,   // Example: 'tmp'                      | Default: 'livewire-tmp'
-        'middleware' => null,  // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
+        'disk' => NULL,        // Example: 'local', 's3'              | Default: 'default'
+        'rules' => NULL,       // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
+        'directory' => NULL,   // Example: 'tmp'                      | Default: 'livewire-tmp'
+        'middleware' => NULL,  // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
         'preview_mimes' => [   // Supported file types for temporary pre-signed file URLs...
             'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
             'mov', 'avi', 'wmv', 'mp3', 'm4a',
             'jpg', 'jpeg', 'mpga', 'webp', 'wma',
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload is invalidated...
-        'cleanup' => true, // Should cleanup temporary uploads older than 24 hrs...
+        'cleanup' => TRUE, // Should cleanup temporary uploads older than 24 hrs...
     ],
 
     /*
@@ -88,7 +90,7 @@ return [
     |
     */
 
-    'render_on_redirect' => false,
+    'render_on_redirect' => FALSE,
 
     /*
     |---------------------------------------------------------------------------
@@ -101,7 +103,7 @@ return [
     |
     */
 
-    'legacy_model_binding' => false,
+    'legacy_model_binding' => FALSE,
 
     /*
     |---------------------------------------------------------------------------
@@ -114,7 +116,7 @@ return [
     |
     */
 
-    'inject_assets' => true,
+    'inject_assets' => TRUE,
 
     /*
     |---------------------------------------------------------------------------
@@ -128,7 +130,7 @@ return [
     */
 
     'navigate' => [
-        'show_progress_bar' => true,
+        'show_progress_bar' => TRUE,
         'progress_bar_color' => '#2299dd',
     ],
 
@@ -143,7 +145,7 @@ return [
     |
     */
 
-    'inject_morph_markers' => true,
+    'inject_morph_markers' => TRUE,
 
     /*
     |---------------------------------------------------------------------------

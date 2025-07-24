@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Repositories\Contracts\ThemeRepositoryInterface;
 use App\Services\ThemeService;
-use App\ViewModels\SiteHeaderViewModel;
 use Illuminate\Support\Collection;
 
 /**
@@ -22,6 +22,7 @@ abstract class Controller
     protected function getLayout(): Collection
     {
         $useType = 'web';
+
         return collect([
             'layout' => app(ThemeService::class)->getLayout($useType),
         ]);

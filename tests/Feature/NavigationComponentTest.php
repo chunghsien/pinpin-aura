@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Livewire\Livewire;
 use Pinpin\ThemesLezada\Http\Livewire\Headers\Partials\Bottom\Navigation;
+use Tests\TestCase;
 
 class NavigationComponentTest extends TestCase
 {
@@ -33,7 +35,7 @@ class NavigationComponentTest extends TestCase
     public function test_navigation_component_handles_overlay_mode()
     {
         // 測試 Overlay Navigation 模式
-        $component = Livewire::test(Navigation::class, ['isOverlayNav' => true]);
+        $component = Livewire::test(Navigation::class, ['isOverlayNav' => TRUE]);
 
         $component->assertOk();
         $this->assertTrue($component->get('isOverlayNav'));

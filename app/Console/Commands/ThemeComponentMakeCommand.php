@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
-use App\Support\PackageClassMapperManger;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -48,13 +49,14 @@ class ThemeComponentMakeCommand extends Command
         $stubView = base_path('stubs/livewire.view.stub');
         $stubTest = base_path('stubs/livewire.test.stub');
 
-        if (!File::exists($stubClass) || !File::exists($stubView)) {
+        if (! File::exists($stubClass) || ! File::exists($stubView)) {
             $this->error('請確認 stubs/livewire.stub 與 livewire.view.stub 是否存在於 stubs 資料夾');
+
             return 1;
         }
 
         // 生成 Class 檔案內容
-        if (!File::isFile($classPath)) {
+        if (! File::isFile($classPath)) {
             $classTemplate = File::get($stubClass);
             $middlePath = str_replace('/', '.', ($livewireDir ? ".{$livewireDir}" : ''));
             $classContent = str_replace(
@@ -62,7 +64,7 @@ class ThemeComponentMakeCommand extends Command
                 [
                     $namespace,
                     $className,
-                    "{$theme}::livewire" . $middlePath . ".{$fileName}"
+                    "{$theme}::livewire" . $middlePath . ".{$fileName}",
                 ],
                 $classTemplate
             );
@@ -73,12 +75,12 @@ class ThemeComponentMakeCommand extends Command
         }
 
         // 生成 livewire 檔案內容
-        if (!File::isFile($viewPath)) {
+        if (! File::isFile($viewPath)) {
             $viewContent = str_replace(
                 ['[class]', '[quote]'],
                 [
                     $className,
-                    "{$theme}::livewire" . ($livewireDir ? ".{$livewireDir}" : '') . ".{$fileName}"
+                    "{$theme}::livewire" . ($livewireDir ? ".{$livewireDir}" : '') . ".{$fileName}",
                 ],
                 File::get($stubView)
             );
@@ -89,7 +91,7 @@ class ThemeComponentMakeCommand extends Command
         }
         // 建立測試檔案（若指定）
         if ($withTest) {
-            if (!File::exists($stubTest)) {
+            if (! File::exists($stubTest)) {
                 $this->warn('未找到 stubs/livewire.test.stub，略過測試檔案建立');
             } else {
                 $testClass = $className . "Test";
@@ -99,13 +101,13 @@ class ThemeComponentMakeCommand extends Command
                         '[testnamespace]',
                         '[classwithnamespace]',
                         '[testclass]',
-                        '[class]'
+                        '[class]',
                     ],
                     [
                         "Pinpin\\ThemesLezada\\Tests\\Feature\\Http\\Livewire",
                         $classWithNamespace,
                         $testClass,
-                        $className
+                        $className,
                     ],
                     File::get($stubTest)
                 );
@@ -116,6 +118,7 @@ class ThemeComponentMakeCommand extends Command
         }
 
         $this->info("livewire Component {$className} 建立完成！");
+
         return 0;
     }
 }

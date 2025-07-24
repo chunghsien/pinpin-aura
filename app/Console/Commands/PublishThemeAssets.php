@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -31,8 +33,9 @@ class PublishThemeAssets extends Command
         $source = base_path("packages/pinpin/{$theme}/public/assets");
         $destination = public_path("themes/{$theme}");
 
-        if (!File::exists($source)) {
+        if (! File::exists($source)) {
             $this->error("資源來源不存在：{$source}");
+
             return 1;
         }
 
@@ -46,7 +49,7 @@ class PublishThemeAssets extends Command
         $targetTsPath = base_path("packages/pinpin/themes-{$theme}/resources/ts");
         $linkPath = base_path("resources/ts/themes/{$theme}");
 
-        if (!File::exists($targetTsPath)) {
+        if (! File::exists($targetTsPath)) {
             $this->warn("⚠️ 找不到 TypeScript 資料夾：{$targetTsPath}，跳過建立 Symbolic Link。");
         } else {
             // 確保上層資料夾存在
@@ -60,6 +63,7 @@ class PublishThemeAssets extends Command
 
             $this->info("✅ 成功建立 Symbolic Link：resources/ts/themes/{$theme}");
         }
+
         return 0;
     }
 }

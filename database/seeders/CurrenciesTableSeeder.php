@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -16,14 +18,16 @@ class CurrenciesTableSeeder extends Seeder
     {
         $pathname = base_path('vendor/sokil/php-isocodes-db-only/databases/iso_4217.json');
 
-        if (!is_file($pathname)) {
+        if (! is_file($pathname)) {
             $this->command->error("找不到貨幣 JSON 檔案，路徑：{$pathname}");
+
             return;
         }
 
-        $data = json_decode(file_get_contents($pathname), true);
-        if (empty($data['4217']) || !is_array($data['4217'])) {
+        $data = json_decode(file_get_contents($pathname), TRUE);
+        if (empty($data['4217']) || ! is_array($data['4217'])) {
             $this->command->error('JSON 檔案的資料結構不正確。');
+
             return;
         }
 
@@ -38,20 +42,21 @@ class CurrenciesTableSeeder extends Seeder
 
             $name = $c['name'] ?? '';
             $isActive = (strtolower($code) === 'twd') ? 1 : 0;
-            $fractionDigits = in_array(strtolower($code), ['twd', 'jpy', 'cny', 'kpw'], true) ? 0 : 2;
+            $fractionDigits = in_array(strtolower($code), ['twd', 'jpy', 'cny', 'kpw'], TRUE) ? 0 : 2;
 
             $insertValues[] = [
-                'code'         => $code,
-                'name'         => $name,
-                'is_active'    => $isActive,
+                'code' => $code,
+                'name' => $name,
+                'is_active' => $isActive,
                 'fraction_digits' => $fractionDigits,
-                'created_at'   => now(),
-                'updated_at'   => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
         if (empty($insertValues)) {
             $this->command->info('沒有可插入的貨幣資料。');
+
             return;
         }
 

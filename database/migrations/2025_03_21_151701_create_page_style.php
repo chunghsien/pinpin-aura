@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +19,7 @@ return new class extends Migration
                 ->constrained('installed_themes');
             $table->string('name', 255);
             $table->text('properties')->nullable();
-            $table->tinyInteger('is_active', false, true)->default(0)->comment('是否啟用');
+            $table->tinyInteger('is_active', FALSE, TRUE)->default(0)->comment('是否啟用');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(
                 new Expression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 // app/Console/Commands/PackageOptionRefresh.php
 
 namespace App\Console\Commands;
@@ -24,8 +26,9 @@ class PackageOptionRefresh extends Command
 
         $dir = base_path("packages/{$org}/{$package}/config/class_mapper");
 
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             $this->error("找不到 class_mappers 目錄: $dir");
+
             return 1;
         }
         $classMapperManger = new PackageClassMapperManger($org, $package);

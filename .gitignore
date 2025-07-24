@@ -9,6 +9,7 @@
 /storage/lezada
 /storage/telescope
 /storage/horizon
+/storage/code-style-reports
 /public/storage
 /public/build
 /public/dist
@@ -57,3 +58,4 @@ Homestead.yaml
 
 # Issue tracking
 /_issue
+.php-cs-fixer.cache

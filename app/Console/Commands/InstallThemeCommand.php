@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\HeaderFooterStyle;
-use Illuminate\Console\Command;
 use App\Models\InstalledTheme;
 use App\Models\SiteStyle;
 use App\Models\ThemeComponent;
+use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class InstallThemeCommand extends Command
 {
@@ -27,53 +29,58 @@ class InstallThemeCommand extends Command
     {
         if (is_link($target)) {
             $this->warn("Symlink 已存在：$target");
+
             return;
         }
 
         if (file_exists($target)) {
             $this->warn("目標已存在且非 Symlink：$target");
+
             return;
         }
 
-        if (!file_exists($source)) {
+        if (! file_exists($source)) {
             $this->warn("來源資料夾不存在：$source");
+
             return;
         }
 
         // 確保目標目錄存在
-        if (!is_dir(dirname($target))) {
-            mkdir(dirname($target), 0755, true);
+        if (! is_dir(dirname($target))) {
+            mkdir(dirname($target), 0755, TRUE);
         }
 
         symlink($source, $target);
         $this->info("已建立 Symlink：$target -> $source");
     }
 
-
     public function handle()
     {
         $org = $this->option('org');
         if (! $org) {
             $this->error('你必須指定 --org');
+
             return 1;
         }
 
         $slug = $this->option('name');
-        if (!$slug) {
+        if (! $slug) {
             $this->error('你必須指定 --name');
+
             return 1;
         }
 
         $themePackageFolder = base_path("packages/{$org}/{$slug}");
-        if (!is_dir($themePackageFolder)) {
+        if (! is_dir($themePackageFolder)) {
             $this->error("該主題名稱 {$slug} 不存在");
+
             return 1;
         }
 
         $force = $this->option('force');
         $exists = InstalledTheme::where('slug', $slug)->exists();
 
-        if ($exists && !$force) {
+        if ($exists && ! $force) {
             $this->warn("主題 [$slug] 已經安裝過了。");
             $action = $this->choice(
                 '請選擇接下來的動作：',
@@ -83,6 +90,7 @@ class InstallThemeCommand extends Command
 
             if ($action === '停止執行') {
                 $this->info("已取消安裝流程。");
+
                 return 0;
             }
         }
@@ -107,29 +115,26 @@ class InstallThemeCommand extends Command
         }
         if (SiteStyle::where('use_type', '=', 'web')->count() == 0) {
             SiteStyle::insert([
-                'use_type' => 'web'
+                'use_type' => 'web',
             ]);
         }
         $headerStyle = HeaderFooterStyle::where('theme_id', '=', $installedTheme->id)
             ->where('type', '=', 'header')->where('is_active', '=', 1)->first();
         if ($headerStyle) {
-            SiteStyle
-                ::where('use_type', '=', 'web')
+            SiteStyle::where('use_type', '=', 'web')
                 ->update(['header_style_id' => $headerStyle->id]);
         }
         //
         if (SiteStyle::where('use_type', '=', 'web-mobile')->count() == 0) {
             SiteStyle::insert([
-                'use_type' => 'web-mobile'
+                'use_type' => 'web-mobile',
             ]);
         }
-        $mobileHeaderStyle = HeaderFooterStyle
-            ::where('theme_id', '=', $installedTheme->id)
+        $mobileHeaderStyle = HeaderFooterStyle::where('theme_id', '=', $installedTheme->id)
             ->whereLike('slug', '%mobile%')
             ->where('type', '=', 'header')->where('is_active', '=', 1)->first() ?? $headerStyle;
         if ($mobileHeaderStyle) {
-            SiteStyle
-                ::where('use_type', '=', 'web-mobile')
+            SiteStyle::where('use_type', '=', 'web-mobile')
                 ->update(['header_style_id' => $mobileHeaderStyle->id]);
         }
         $this->info("主題 [$slug] 已成功" . ($exists ? '更新' : '安裝') . "！");
@@ -140,8 +145,9 @@ class InstallThemeCommand extends Command
      */
     protected function registerLivewireComponents($installedTheme, $componentPath)
     {
-        if (!is_dir($componentPath)) {
+        if (! is_dir($componentPath)) {
             $this->warn("未找到 Livewire Component 目錄：{$componentPath}");
+
             return;
         }
 

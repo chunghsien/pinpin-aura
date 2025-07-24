@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Helpers\MenuStructureHelper;
@@ -16,7 +18,7 @@ class CompleteHeaderStructureTest extends TestCase
 
         // 驗證頂層選單
         $topLevelMenus = array_filter($convertedMenus, function ($menu) {
-            return $menu['parent_id'] === null;
+            return $menu['parent_id'] === NULL;
         });
 
         $this->assertCount(5, $topLevelMenus, '應該有 5 個頂層選單');
@@ -51,11 +53,12 @@ class CompleteHeaderStructureTest extends TestCase
     public function test_home_mega_menu_structure()
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
-        $homeMenu = null;
+        $homeMenu = NULL;
 
         foreach ($desktopMenus as $menu) {
             if ($menu['name'] === 'Home') {
                 $homeMenu = $menu;
+
                 break;
             }
         }
@@ -66,11 +69,12 @@ class CompleteHeaderStructureTest extends TestCase
         $this->assertCount(5, $homeMenu['children'], 'Home 應該有 5 個欄位');
 
         // 檢查是否有圖片欄位
-        $hasMenuImage = false;
+        $hasMenuImage = FALSE;
         foreach ($homeMenu['children'] as $child) {
-            if ($child['meta']['is_menu_image'] ?? false) {
-                $hasMenuImage = true;
+            if ($child['meta']['is_menu_image'] ?? FALSE) {
+                $hasMenuImage = TRUE;
                 $this->assertNotEmpty($child['meta']['menu_image_url'], '選單圖片應該有 URL');
+
                 break;
             }
         }
@@ -80,11 +84,12 @@ class CompleteHeaderStructureTest extends TestCase
     public function test_shop_mega_menu_structure()
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
-        $shopMenu = null;
+        $shopMenu = NULL;
 
         foreach ($desktopMenus as $menu) {
             if ($menu['name'] === 'Shop') {
                 $shopMenu = $menu;
+
                 break;
             }
         }
@@ -107,11 +112,12 @@ class CompleteHeaderStructureTest extends TestCase
     public function test_elements_mega_menu_structure()
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
-        $elementsMenu = null;
+        $elementsMenu = NULL;
 
         foreach ($desktopMenus as $menu) {
             if ($menu['name'] === 'Elements') {
                 $elementsMenu = $menu;
+
                 break;
             }
         }
@@ -125,11 +131,12 @@ class CompleteHeaderStructureTest extends TestCase
     public function test_pages_single_column_menu()
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
-        $pagesMenu = null;
+        $pagesMenu = NULL;
 
         foreach ($desktopMenus as $menu) {
             if ($menu['name'] === 'Pages') {
                 $pagesMenu = $menu;
+
                 break;
             }
         }
@@ -143,11 +150,12 @@ class CompleteHeaderStructureTest extends TestCase
     public function test_blog_multi_level_menu()
     {
         $desktopMenus = MenuStructureHelper::getDesktopMenuFormat();
-        $blogMenu = null;
+        $blogMenu = NULL;
 
         foreach ($desktopMenus as $menu) {
             if ($menu['name'] === 'Blog') {
                 $blogMenu = $menu;
+
                 break;
             }
         }
@@ -157,11 +165,12 @@ class CompleteHeaderStructureTest extends TestCase
         $this->assertFalse(MenuStructureHelper::isMegaMenu($blogMenu), 'Blog 不應該是 Mega Menu');
 
         // 檢查多層級結構
-        $hasMultiLevel = false;
+        $hasMultiLevel = FALSE;
         foreach ($blogMenu['children'] as $child) {
-            if (!empty($child['children'])) {
-                $hasMultiLevel = true;
+            if (! empty($child['children'])) {
+                $hasMultiLevel = TRUE;
                 $this->assertGreaterThan(0, count($child['children']), '應該有第三層選單');
+
                 break;
             }
         }
@@ -174,21 +183,21 @@ class CompleteHeaderStructureTest extends TestCase
 
         // 檢查有圖片的選單項目
         $menusWithImages = array_filter($convertedMenus, function ($menu) {
-            return $menu['has_image'] === true;
+            return $menu['has_image'] === TRUE;
         });
 
         $this->assertGreaterThan(10, count($menusWithImages), '應該有多個帶圖片的選單項目');
 
         // 檢查選單圖片
         $menuImages = array_filter($convertedMenus, function ($menu) {
-            return !empty($menu['menu_image_url']);
+            return ! empty($menu['menu_image_url']);
         });
 
         $this->assertGreaterThan(0, count($menuImages), '應該有選單圖片項目');
 
         // 檢查欄位標題
         $columnTitles = array_filter($convertedMenus, function ($menu) {
-            return $menu['is_column_title'] === true;
+            return $menu['is_column_title'] === TRUE;
         });
 
         $this->assertGreaterThan(5, count($columnTitles), '應該有多個欄位標題');
@@ -211,7 +220,7 @@ class CompleteHeaderStructureTest extends TestCase
     {
         $maxDepth = $currentDepth;
 
-        if (!empty($menu['children'])) {
+        if (! empty($menu['children'])) {
             foreach ($menu['children'] as $child) {
                 $childDepth = $this->calculateMenuDepth($child, $currentDepth + 1);
                 $maxDepth = max($maxDepth, $childDepth);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum MenuStyle: string
@@ -129,7 +131,7 @@ enum MenuStyle: string
      */
     public function supportsMultiLevel(): bool
     {
-        return in_array($this, [self::MULTI_LEVEL, self::MEGA_MENU]);
+        return in_array($this, [self::MULTI_LEVEL, self::MEGA_MENU], TRUE);
     }
 
     /**

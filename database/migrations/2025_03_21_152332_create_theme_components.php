@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -25,7 +26,7 @@ return new class extends Migration
                 'row',
                 'module',
                 'blade',
-                'livewire'
+                'livewire',
             ])
                 ->comment(
                     json_encode(
@@ -38,7 +39,7 @@ return new class extends Migration
                             'section' => '部分',
                             'row' => '列',
                             'module' => '模塊，最基礎的html元件',
-                            'blade' => 'Blade 元件'
+                            'blade' => 'Blade 元件',
                         ],
                         JSON_UNESCAPED_UNICODE
                     )

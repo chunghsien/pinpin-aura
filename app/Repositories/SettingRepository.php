@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Setting;
@@ -9,10 +11,11 @@ class SettingRepository implements Contracts\SettingRepositoryInterface
 {
     protected string $cachePrefix = 'settings.';
 
-    public function get(string $key, $default = null): mixed
+    public function get(string $key, $default = NULL): mixed
     {
         return Cache::rememberForever($this->cachePrefix . $key, function () use ($key, $default) {
             $value = Setting::get($key, $default);
+
             return $this->maybeDecode($value);
         });
     }
@@ -28,20 +31,23 @@ class SettingRepository implements Contracts\SettingRepositoryInterface
         if (is_array($value) || is_object($value)) {
             return json_encode($value, JSON_UNESCAPED_UNICODE);
         }
+
         return (string) $value;
     }
 
     protected function maybeDecode(?string $value): mixed
     {
         if (is_string($value) && $this->isJson($value)) {
-            return json_decode($value, true);
+            return json_decode($value, TRUE);
         }
+
         return $value;
     }
 
     protected function isJson(string $value): bool
     {
         json_decode($value);
+
         return json_last_error() === JSON_ERROR_NONE;
     }
 }

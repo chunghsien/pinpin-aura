@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Enums;
 
-use App\Enums\MenuType;
-use App\Enums\MenuStyle;
 use App\Enums\LinkType;
+use App\Enums\MenuStyle;
+use App\Enums\MenuType;
 use PHPUnit\Framework\TestCase;
 
 class MenuEnumsTest extends TestCase

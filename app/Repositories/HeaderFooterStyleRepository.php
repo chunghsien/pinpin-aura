@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\HeaderFooterStyle;
-use App\Repositories\HeaderFooterStyleRepositoryInterface;
 
 class HeaderFooterStyleRepository implements Contracts\HeaderFooterStyleRepositoryInterface
 {

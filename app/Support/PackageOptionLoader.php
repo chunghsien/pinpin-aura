@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Support;
 
 use Illuminate\Support\Facades\File;
@@ -18,7 +20,7 @@ class PackageOptionLoader
         $this->packagePath = base_path("packages/{$org}/{$package}/config/class-mapper");
         $this->package = $package;
         $this->org = $org;
-        if (!is_dir($this->packagePath)) {
+        if (! is_dir($this->packagePath)) {
             throw new InvalidArgumentException("無法找到 class_mapper 路徑: {$this->packagePath}");
         }
     }
@@ -27,7 +29,7 @@ class PackageOptionLoader
     {
         $filePath = "{$this->packagePath}/{$filename}.php";
 
-        if (!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             if (app()->runningInConsole()) {
                 return [];
             } else {
@@ -38,11 +40,13 @@ class PackageOptionLoader
 
             $config = app('array-loader')::load($filePath);
 
-            if (!is_array($config)) {
+            if (! is_array($config)) {
                 throw new InvalidArgumentException("設定檔需回傳陣列: {$filePath}");
             }
+
             return $config;
         }
+
         return [];
     }
 
@@ -55,6 +59,7 @@ class PackageOptionLoader
                 $all[$name] = app('array-loader')::load($file->getRealPath());
             }
         }
+
         return $all;
     }
 }

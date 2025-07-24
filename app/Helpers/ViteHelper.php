@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // app/Helpers/ViteHelper.php
 
 namespace App\Helpers;
@@ -42,11 +44,13 @@ class ViteHelper
 
         if (self::isDev()) {
             $hotDomainProtocol = File::get(Vite::hotFile());
+
             // 開發環境走 Vite Dev Server，直接載入原始 TS 檔案
             return "<script type=\"module\" src=\"{$hotDomainProtocol}/{$entry}\"></script>";
         }
         self::loadManifest();
-        $file = self::$manifest->{$entry}->file ?? null;
+        $file = self::$manifest->{$entry}->file ?? NULL;
+
         return File::isFile(public_path($file))
             ? "<script type=\"module\" src=\"{$file}\"></script>"
             : '';
@@ -56,8 +60,11 @@ class ViteHelper
     {
 
         $routeName = Route::currentRouteName();
-        if (!$routeName) return '';
+        if (! $routeName) {
+            return '';
+        }
         $entry = "resources/ts/themes/{$themeName}/pages/{$routeName}.ts";
+
         return self::scriptTag($entry);
     }
 }

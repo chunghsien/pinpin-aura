@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Services\LayoutService;
-use Illuminate\Http\Request;
 
 class ShopCartController extends Controller
 {

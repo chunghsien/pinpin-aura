@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +34,7 @@ class LanguageLocale extends Model
      *
      * @var bool
      */
-    public $incrementing = false;
+    public $incrementing = FALSE;
 
     /**
      * 可批量賦值的屬性

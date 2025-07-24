@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -33,9 +35,9 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
-            'throw' => false,
-            'report' => false,
+            'serve' => TRUE,
+            'throw' => FALSE,
+            'report' => FALSE,
         ],
 
         'public' => [
@@ -43,8 +45,8 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
+            'throw' => FALSE,
+            'report' => FALSE,
         ],
 
         's3' => [
@@ -55,9 +57,9 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', FALSE),
+            'throw' => FALSE,
+            'report' => FALSE,
         ],
 
     ],

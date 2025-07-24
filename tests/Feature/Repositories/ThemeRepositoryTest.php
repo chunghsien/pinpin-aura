@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Repositories;
 
-use Tests\TestCase;
 use App\Models\InstalledTheme;
 use App\Repositories\ThemeRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ThemeRepositoryTest extends TestCase
 {
@@ -18,7 +20,7 @@ class ThemeRepositoryTest extends TestCase
             'use_type' => 'site',
             'name' => $slug,
             'slug' => $slug,
-            'is_active' => true,
+            'is_active' => TRUE,
             'installed_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),

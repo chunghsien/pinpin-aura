@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Services;
 
-use Tests\TestCase;
-use App\Services\ThemeService;
-use App\Repositories\ThemeRepositoryInterface;
 use App\Models\InstalledTheme;
+use App\Repositories\ThemeRepositoryInterface;
+use App\Services\ThemeService;
 use Mockery;
+use Tests\TestCase;
 
 class ThemeServiceTest extends TestCase
 {
@@ -28,7 +30,7 @@ class ThemeServiceTest extends TestCase
         $mockRepo = Mockery::mock(ThemeRepositoryInterface::class);
         $mockRepo->shouldReceive('getActiveSiteTheme')
             ->once()
-            ->andReturn(null);
+            ->andReturn(NULL);
 
         $service = new ThemeService($mockRepo);
         $this->assertEquals('default::layouts.app', $service->getLayout());

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -21,6 +23,7 @@ class DefaultDocument extends Seeder
                 $methods = array_values(array_filter($route->methods(), function ($method) {
                     return strtoupper($method) !== 'HEAD';
                 }));
+
                 return [
                     'index' => $route->getName(),
                     'name' => $route->getName(),

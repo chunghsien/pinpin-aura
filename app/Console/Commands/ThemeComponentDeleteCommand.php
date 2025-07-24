@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -36,8 +38,9 @@ class ThemeComponentDeleteCommand extends Command
         $viewPath = $basePath . "/resources/views/livewire" . ($bladeDir ? "/{$bladeDir}" : '') . "/{$fileName}.blade.php";
         $testPath = $basePath . "/tests/Feature/Http/{$className}Test.php";
 
-        if (!$force && !$this->confirm("你確定要刪除 Livewire 元件 {$className} 嗎？")) {
+        if (! $force && ! $this->confirm("你確定要刪除 Livewire 元件 {$className} 嗎？")) {
             $this->warn("已取消刪除。");
+
             return 0;
         }
 
@@ -49,6 +52,7 @@ class ThemeComponentDeleteCommand extends Command
         }
 
         $this->info("Blade 元件 {$className} 已移除完成。");
+
         return 0;
     }
 }

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Livewire\Livewire;
 use App\Models\Menu;
-use Pinpin\ThemesLezada\Http\Livewire\Headers\Partials\Bottom\Navigation;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use Livewire\Livewire;
+use Pinpin\ThemesLezada\Http\Livewire\Headers\Partials\Bottom\Navigation;
+use Tests\TestCase;
 
 class NavigationIntegrationTest extends TestCase
 {
@@ -27,8 +29,8 @@ class NavigationIntegrationTest extends TestCase
             $table->string('link_type', 50)->default('internal')->comment('連結類型');
             $table->string('link_target', 255)->nullable()->comment('連結目標 URL 或路由');
             $table->integer('order')->default(0)->comment('排序');
-            $table->boolean('is_active')->default(true)->comment('是否啟用');
-            $table->boolean('open_new_tab')->default(false)->comment('是否開新視窗');
+            $table->boolean('is_active')->default(TRUE)->comment('是否啟用');
+            $table->boolean('open_new_tab')->default(FALSE)->comment('是否開新視窗');
             $table->string('icon', 100)->nullable()->comment('圖示 (Icon)');
             $table->timestamps();
 
@@ -44,7 +46,7 @@ class NavigationIntegrationTest extends TestCase
 
         $component->assertOk();
         $component->assertViewHas('menuItems');
-        $component->assertViewHas('useDatabase', false);
+        $component->assertViewHas('useDatabase', FALSE);
 
         // 驗證靜態資料載入成功
         $this->assertNotEmpty($component->get('menuItems'));
@@ -59,7 +61,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         Menu::create([
@@ -69,14 +71,14 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/about',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $component = Livewire::test(Navigation::class, []);
 
         $component->assertOk();
         $component->assertViewHas('menuItems');
-        $component->assertViewHas('useDatabase', true);
+        $component->assertViewHas('useDatabase', TRUE);
 
         // 驗證資料庫資料載入成功
         $menuItems = $component->get('menuItems');
@@ -92,7 +94,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/products',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         Menu::create([
@@ -102,7 +104,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/products/category-1',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $component = Livewire::test(Navigation::class, []);
@@ -123,7 +125,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/about',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $externalMenu = Menu::create([
@@ -132,7 +134,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'external',
             'link_target' => 'https://example.com',
             'order' => 2,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $component = Livewire::test(Navigation::class, []);
@@ -151,10 +153,10 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
-        $component = Livewire::test(Navigation::class, ['isOverlayNav' => true]);
+        $component = Livewire::test(Navigation::class, ['isOverlayNav' => TRUE]);
 
         $component->assertOk();
         $this->assertTrue($component->get('isOverlayNav'));
@@ -186,7 +188,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/shop',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $subMenu = Menu::create([
@@ -196,7 +198,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/shop/category',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         Menu::create([
@@ -206,7 +208,7 @@ class NavigationIntegrationTest extends TestCase
             'link_type' => 'internal',
             'link_target' => '/shop/category/subcategory',
             'order' => 1,
-            'is_active' => true,
+            'is_active' => TRUE,
         ]);
 
         $component = Livewire::test(Navigation::class, []);

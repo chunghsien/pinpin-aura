@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Controllers;
 
-use Tests\TestCase;
-use App\Services\ThemeService;
 use App\Http\Controllers\Controller;
+use App\Services\ThemeService;
 use Mockery;
+use Tests\TestCase;
 
 class DummySiteController extends Controller
 {
@@ -39,7 +41,7 @@ class IndexControllerTest extends TestCase
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
+        $method->setAccessible(TRUE);
 
         return $method->invokeArgs($object, $parameters);
     }

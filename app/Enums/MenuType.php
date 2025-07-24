@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum MenuType: string
@@ -79,7 +81,7 @@ enum MenuType: string
      */
     public function isPrimary(): bool
     {
-        return in_array($this, [self::HEADER, self::MOBILE]);
+        return in_array($this, [self::HEADER, self::MOBILE], TRUE);
     }
 
     /**
@@ -87,6 +89,6 @@ enum MenuType: string
      */
     public function isResponsive(): bool
     {
-        return in_array($this, [self::HEADER, self::MOBILE, self::SIDE]);
+        return in_array($this, [self::HEADER, self::MOBILE, self::SIDE], TRUE);
     }
 }

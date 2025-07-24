@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,13 +21,15 @@ class Setting extends Model
         'updated_at' => 'datetime',
     ];
 
-    public $timestamps = true;
-    public $incrementing = false;
+    public $timestamps = TRUE;
+
+    public $incrementing = FALSE;
+
     protected $keyType = 'string';
+
     protected $primaryKey = 'key';
 
-
-    public static function get(string $key, $default = null)
+    public static function get(string $key, $default = NULL)
     {
         return optional(static::find($key))->value ?? $default;
     }
@@ -40,7 +44,8 @@ class Setting extends Model
      */
     public function getValueAttribute($value)
     {
-        $decoded = json_decode($value, true);
+        $decoded = json_decode($value, TRUE);
+
         return (json_last_error() === JSON_ERROR_NONE) ? $decoded : $value;
     }
 }

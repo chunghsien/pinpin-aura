@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 class MenuStructureHelper
@@ -46,7 +48,7 @@ class MenuStructureHelper
 
         foreach ($allMenus as $topLevelMenu) {
             // 處理頂層選單
-            $topMenu = self::convertMenuItem($topLevelMenu, null, $idCounter++);
+            $topMenu = self::convertMenuItem($topLevelMenu, NULL, $idCounter++);
             $convertedMenus[] = $topMenu;
 
             // 處理子選單
@@ -75,31 +77,31 @@ class MenuStructureHelper
             'order' => $item['sort_order'] ?? 0,
             'is_active' => ($item['status'] ?? 'active') === 'active',
             'open_new_tab' => ($item['target'] ?? '_self') === '_blank',
-            'icon' => $item['icon'] ?? null,
+            'icon' => $item['icon'] ?? NULL,
 
             // 新增的進階欄位
             'menu_style' => $item['menu_style'] ?? 'simple',
-            'mega_columns' => $item['mega_columns'] ?? null,
-            'column_title' => $item['is_column_title'] ?? false ? $item['title'] : null,
-            'image_url' => $item['image_url'] ?? null,
-            'menu_image_url' => $item['menu_image_url'] ?? null,
-            'has_image' => $item['has_image'] ?? false,
-            'css_class' => $item['css_class'] ?? null,
-            'is_mega_column' => $item['is_mega_column'] ?? false,
-            'is_column_title' => $item['is_column_title'] ?? false,
-            'is_featured' => $item['is_featured'] ?? false,
-            'description' => $item['description'] ?? null,
+            'mega_columns' => $item['mega_columns'] ?? NULL,
+            'column_title' => $item['is_column_title'] ?? FALSE ? $item['title'] : NULL,
+            'image_url' => $item['image_url'] ?? NULL,
+            'menu_image_url' => $item['menu_image_url'] ?? NULL,
+            'has_image' => $item['has_image'] ?? FALSE,
+            'css_class' => $item['css_class'] ?? NULL,
+            'is_mega_column' => $item['is_mega_column'] ?? FALSE,
+            'is_column_title' => $item['is_column_title'] ?? FALSE,
+            'is_featured' => $item['is_featured'] ?? FALSE,
+            'description' => $item['description'] ?? NULL,
 
             // 額外的樣式資訊（保持向後相容）
             'meta' => [
-                'css_class' => $item['css_class'] ?? null,
-                'description' => $item['description'] ?? null,
+                'css_class' => $item['css_class'] ?? NULL,
+                'description' => $item['description'] ?? NULL,
                 'target' => $item['target'] ?? '_self',
-                'menu_type' => $item['menu_style'] ?? null,
-                'mega_columns' => $item['mega_columns'] ?? null,
-                'is_menu_image' => $item['is_menu_image'] ?? false,
-                'menu_image_url' => $item['menu_image_url'] ?? null,
-            ]
+                'menu_type' => $item['menu_style'] ?? NULL,
+                'mega_columns' => $item['mega_columns'] ?? NULL,
+                'is_menu_image' => $item['is_menu_image'] ?? FALSE,
+                'menu_image_url' => $item['menu_image_url'] ?? NULL,
+            ],
         ];
     }
 
@@ -125,7 +127,7 @@ class MenuStructureHelper
 
         return [
             'menus' => $processedMenus,
-            'counter' => $counter
+            'counter' => $counter,
         ];
     }
 
@@ -135,6 +137,7 @@ class MenuStructureHelper
     public static function getDesktopMenuFormat(): array
     {
         $menus = self::convertToMenusFormat();
+
         return self::buildHierarchicalStructure($menus, 'header');
     }
 
@@ -144,8 +147,9 @@ class MenuStructureHelper
     public static function getMobileMenuFormat(): array
     {
         $menus = self::convertToMenusFormat();
+
         // 手機版可能需要不同的結構或過濾條件
-        return self::buildHierarchicalStructure($menus, 'header', true);
+        return self::buildHierarchicalStructure($menus, 'header', TRUE);
     }
 
     /**
@@ -154,6 +158,7 @@ class MenuStructureHelper
     public static function getVerticalMenuFormat(): array
     {
         $menus = self::convertToMenusFormat();
+
         // 垂直選單可能需要扁平化或簡化的結構
         return self::buildHierarchicalStructure($menus, 'header');
     }
@@ -161,7 +166,7 @@ class MenuStructureHelper
     /**
      * 建立階層式結構
      */
-    private static function buildHierarchicalStructure(array $menus, string $type, bool $simplify = false): array
+    private static function buildHierarchicalStructure(array $menus, string $type, bool $simplify = FALSE): array
     {
         // 篩選指定類型的選單
         $filteredMenus = array_filter($menus, function ($menu) use ($type) {
@@ -176,14 +181,14 @@ class MenuStructureHelper
             $menuMap[$menu['id']] = $menu;
             $menuMap[$menu['id']]['children'] = [];
 
-            if ($menu['parent_id'] === null) {
+            if ($menu['parent_id'] === NULL) {
                 $topLevelMenus[] = &$menuMap[$menu['id']];
             }
         }
 
         // 建立子選單關係
         foreach ($filteredMenus as $menu) {
-            if ($menu['parent_id'] !== null && isset($menuMap[$menu['parent_id']])) {
+            if ($menu['parent_id'] !== NULL && isset($menuMap[$menu['parent_id']])) {
                 $menuMap[$menu['parent_id']]['children'][] = &$menuMap[$menu['id']];
             }
         }
@@ -210,7 +215,7 @@ class MenuStructureHelper
     private static function sortChildrenRecursively(array &$menus): void
     {
         foreach ($menus as &$menu) {
-            if (!empty($menu['children'])) {
+            if (! empty($menu['children'])) {
                 usort($menu['children'], function ($a, $b) {
                     return $a['order'] <=> $b['order'];
                 });
@@ -226,16 +231,16 @@ class MenuStructureHelper
     {
         foreach ($menus as &$menu) {
             // 手機版可能只顯示前兩層選單
-            if (!empty($menu['children'])) {
+            if (! empty($menu['children'])) {
                 foreach ($menu['children'] as &$child) {
-                    if (!empty($child['children']) && count($child['children']) > 5) {
+                    if (! empty($child['children']) && count($child['children']) > 5) {
                         // 限制子選單數量
                         $child['children'] = array_slice($child['children'], 0, 5);
                         $child['children'][] = [
                             'id' => 'more_' . $child['id'],
                             'name' => '更多...',
                             'link_target' => $child['link_target'],
-                            'meta' => ['is_more_link' => true]
+                            'meta' => ['is_more_link' => TRUE],
                         ];
                     }
                 }
@@ -252,24 +257,24 @@ class MenuStructureHelper
     {
         // 檢查 meta 中的 menu_type
         if (isset($menu['meta']['menu_type']) && str_contains($menu['meta']['menu_type'], 'mega-menu')) {
-            return true;
+            return TRUE;
         }
 
         // 檢查 meta 中的 css_class
         if (isset($menu['meta']['css_class']) && str_contains($menu['meta']['css_class'], 'mega-menu')) {
-            return true;
+            return TRUE;
         }
 
         // 檢查是否有多個子選單且子選單有 mega-menu-column 類別
-        if (!empty($menu['children']) && count($menu['children']) >= 3) {
+        if (! empty($menu['children']) && count($menu['children']) >= 3) {
             foreach ($menu['children'] as $child) {
                 if (isset($child['meta']['css_class']) && str_contains($child['meta']['css_class'], 'mega-menu-column')) {
-                    return true;
+                    return TRUE;
                 }
             }
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
@@ -279,7 +284,7 @@ class MenuStructureHelper
     {
         $classes = [];
 
-        if (!empty($menu['children'])) {
+        if (! empty($menu['children'])) {
             $classes[] = 'menu-item-has-children';
         }
 

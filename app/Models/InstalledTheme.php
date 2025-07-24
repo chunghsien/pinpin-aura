@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Traits\Activate;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InstalledTheme extends Model
 {
@@ -55,11 +56,11 @@ class InstalledTheme extends Model
     public function activate(string $useType): void
     {
         self::where('id', '!=', $this->id)->where('use_type', '=', $useType)
-            ->update(['is_active' => false]);
-        $this->update(['is_active' => true]);
+            ->update(['is_active' => FALSE]);
+        $this->update(['is_active' => TRUE]);
         // 啟用這個主題（如果尚未啟用）
-        if (!$this->is_active) {
-            $this->is_active = true;
+        if (! $this->is_active) {
+            $this->is_active = TRUE;
             $this->save();
         }
     }

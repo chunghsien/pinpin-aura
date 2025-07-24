@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\MenuType;
@@ -8,7 +10,6 @@ use App\Repositories\Contracts\SiteStyleRepositoryInterface;
 
 class LayoutService
 {
-
     public function __construct(
         protected SiteStyleRepositoryInterface $siteStyleRepository
     ) {
@@ -28,17 +29,18 @@ class LayoutService
                     'installedTheme' => $installedThemeModel,
                     'header' => $headerStyleModel,
                     'menus' => $headerMenus,
-                ]
+                ],
             ],
             'footerViewModel' => [
                 'component' => $footerStyleModel->slug,
                 'properties' => [
                     'installedTheme' => $installedThemeModel,
                     'footer' => $footerStyleModel,
-                ]
-            ]
+                ],
+            ],
 
         ];
+
         return $viewModel;
     }
 }

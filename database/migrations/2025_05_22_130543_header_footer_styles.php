@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class () extends Migration {
     public function up(): void
     {
         Schema::create('header_footer_styles', function (Blueprint $table) {
@@ -15,7 +17,7 @@ return new class extends Migration {
             $table->enum('type', ['header', 'footer'])->comment('樣式類型：header 或 footer');
             $table->string('name')->comment('樣式名稱，例如：經典標頭');
             $table->string('slug')->unique()->comment('樣式代碼，用於 Blade Component 呼叫，無作用時僅作為識別用');
-            $table->boolean('is_active')->default(true)->comment('樣式是否啟用');
+            $table->boolean('is_active')->default(TRUE)->comment('樣式是否啟用');
             $table->string('preview_image')->nullable()->comment('預覽圖 URL');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(new Expression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

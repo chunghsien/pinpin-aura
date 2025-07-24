@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Traits\Activate;
@@ -8,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PageStyle extends Model
 {
-    use HasFactory, Activate;
+    use HasFactory;
+    use Activate;
 
     /**
      *

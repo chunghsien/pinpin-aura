@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CustomController;
@@ -11,10 +14,9 @@ use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\ShopCheckoutController;
 use App\Http\Controllers\ShopProductController;
 use App\Http\Controllers\ShopWishlistController;
-use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('{lang}/admin')->group(function () {
     Route::get('/{any?}', [AdminIndexController::class, 'query'])
@@ -33,6 +35,7 @@ Route::middleware(['web'])->group(function () {
             return view('welcome');
         }
         $defaultLang = str_replace('_', '-', env('APP_LOCALE'));
+
         return Redirect::to("/{$defaultLang}");
     });
     Route::get('/{lang}', [IndexController::class, 'query'])->name('home');

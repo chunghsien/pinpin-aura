@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Support;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
-use PhpParser\Node;
 
 /**
  * @desc 新增Command或Livewirem元件時更新
@@ -15,7 +17,9 @@ use PhpParser\Node;
 class PackageClassMapperManger
 {
     protected $packageOrg;
+
     protected $packageName;
+
     protected $basePath;
 
     public function __construct($packageOrg, $packageName)
@@ -23,19 +27,21 @@ class PackageClassMapperManger
         $this->packageOrg = $packageOrg;
         $this->packageName = $packageName;
         $this->basePath = base_path("packages/{$packageOrg}/{$packageName}");
-        if (!is_dir($this->basePath)) {
-            File::makeDirectory($this->basePath, 0755, true);
+        if (! is_dir($this->basePath)) {
+            File::makeDirectory($this->basePath, 0755, TRUE);
         }
     }
+
     protected function getClassFullNameFromFile(string $filePath): ?string
     {
         $code = file_get_contents($filePath);
-        $parser = (new ParserFactory)->createForHostVersion();
+        $parser = (new ParserFactory())->createForHostVersion();
         $ast = $parser->parse($code);
 
         $traverser = new NodeTraverser();
-        $visitor = new class extends NodeVisitorAbstract {
+        $visitor = new class () extends NodeVisitorAbstract {
             public string $namespace = '';
+
             public string $className = '';
 
             public function enterNode(Node $node)
@@ -59,8 +65,9 @@ class PackageClassMapperManger
                 : $visitor->className;
         }
 
-        return null;
+        return NULL;
     }
+
     public function scanAndSave(string $type)
     {
         $filesMapper = [
@@ -70,7 +77,7 @@ class PackageClassMapperManger
         $phpFiles = File::glob("{$this->basePath}/{$fileOri}");
         //$map = [];
         $arrayBody = "";
-        $useClass = [null];
+        $useClass = [NULL];
         foreach ($phpFiles as $filePath) {
             $class = $this->getClassFullNameFromFile($filePath);
 
@@ -80,13 +87,15 @@ class PackageClassMapperManger
                 if ($type == 'livewire') {
                     $mapVal = explode("\\", $class);
                     $mapVal = array_filter($mapVal, function ($part) {
-                        return false === array_search(
+                        return FALSE === array_search(
                             $part,
-                            [Str::studly($this->packageOrg), 'Http', 'Livewire']
+                            [Str::studly($this->packageOrg), 'Http', 'Livewire'],
+                            TRUE
                         );
                     });
                     $mapVal = array_map(function ($part) {
                         $part = preg_replace('/^themes/i', '', $part);
+
                         return strtolower(Str::kebab($part));
                     }, $mapVal);
                     $mapVal = array_values($mapVal);
@@ -97,12 +106,13 @@ class PackageClassMapperManger
                 $arrayBody .= "    {$baseClass}::class => \"{$mapVal}\",\n";
             }
         }
-        $useClass[] = null;
+        $useClass[] = NULL;
         $useClassString = implode("\n", $useClass);
         $arrayBody = preg_replace('/\,$/', '', $arrayBody);
         $output = "<?php\n{$useClassString}\nreturn [\n{$arrayBody}];\n";
         $savePath = "{$this->basePath}/config/class_mapper/{$type}.php";
         File::put($savePath, $output);
+
         return $this;
     }
 }
