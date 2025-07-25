@@ -7,8 +7,6 @@
 /storage/*.key
 /storage/pail
 /storage/lezada
-/storage/telescope
-/storage/horizon
 /storage/code-style-reports
 /public/storage
 /public/build
@@ -56,6 +54,4 @@ Desktop.ini
 Homestead.json
 Homestead.yaml
 
-# Issue tracking
-/_issue
 .php-cs-fixer.cache

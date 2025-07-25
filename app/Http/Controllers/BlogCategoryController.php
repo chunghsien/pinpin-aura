@@ -10,9 +10,11 @@ class BlogCategoryController extends Controller
 {
     public function query()
     {
+        /** @var LayoutService $layoutService */
+        $layoutService = app(LayoutService::class);
         return view(
             'blog.category',
-            $this->getLayout()->merge(app(LayoutService::class)->getViewModel('web'))
+            $this->getLayout()->merge($layoutService->getViewModel('web'))
         );
     }
 }

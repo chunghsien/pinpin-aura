@@ -22,9 +22,10 @@ abstract class Controller
     protected function getLayout(): Collection
     {
         $useType = 'web';
-
+        /** @var ThemeService $themeService */
+        $themeService = app(ThemeService::class);
         return collect([
-            'layout' => app(ThemeService::class)->getLayout($useType),
+            'layout' => $themeService->getLayout($useType),
         ]);
     }
 }

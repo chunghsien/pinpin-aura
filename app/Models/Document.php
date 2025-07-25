@@ -20,7 +20,7 @@ class Document extends Model
         'index',
         'name',
         'sort',
-        'is_allowed_methods',
+        'allowed_methods',
         'is_active',
     ];
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
@@ -25,7 +25,7 @@ return new class () extends Migration {
             $table->string('version')->nullable()->comment('樣板版本');
             $table->string('author')->nullable()->comment('樣板作者');
             $table->text('description')->nullable()->comment('主題說明');
-            $table->tinyInteger('is_active', FALSE, TRUE)->default(0)->comment('是否為啟用中樣板');
+            $table->boolean('is_active', FALSE, TRUE)->default(0)->comment('是否為啟用中樣板');
             $table->timestamp('installed_at')->useCurrent()->comment('安裝時間');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(

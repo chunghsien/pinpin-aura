@@ -12,7 +12,7 @@ class ThemeComponent extends Model
     use HasFactory;
 
     /**
-     * @var list<string>
+     * @var string[]
      */
     protected $fillable = [
         'installed_theme_id',
@@ -21,7 +21,7 @@ class ThemeComponent extends Model
     ];
 
     /**
-     * @var list<string>
+     * @var string[]
      */
     protected $casts = [
         'created_at' => 'datetime',
