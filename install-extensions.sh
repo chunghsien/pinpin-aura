@@ -27,7 +27,7 @@ fi
 
 echo "✅ 將使用 $CMD 安裝以下套件..."
 
-extensions=(
+extensions=(  
   amiralizadeh9480.laravel-extra-intellisense
   bierner.markdown-mermaid
   bmewburn.vscode-intelephense-client
@@ -38,6 +38,7 @@ extensions=(
   eamodio.gitlens
   ecmel.vscode-html-css
   esbenp.prettier-vscode
+  humy2833.ftp-simple
   infeng.vscode-react-typescript
   jaspernorth.vscode-pigments
   junstyle.php-cs-fixer

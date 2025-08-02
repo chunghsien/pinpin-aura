@@ -43,8 +43,8 @@ auth.json
 
 # OS-generated
 .Zone.Identifier
-Thumbs.db
-Desktop.ini
+.Thumbs.db
+.Desktop.ini
 
 # TypeScript/Blade Theme Folders
 /resources/ts/themes/*
